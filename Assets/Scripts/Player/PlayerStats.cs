@@ -138,5 +138,4 @@ public enum ScoreValutes
     scoreCoins,
     scoreDollars,
     scoreMotivations
-
 }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -140,7 +139,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
         transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.fixedDeltaTime);
 
-        rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement * (speed * Time.fixedDeltaTime));
 
         _animatorPlayer.SetBool(SpringHash, isSprinting);
 
