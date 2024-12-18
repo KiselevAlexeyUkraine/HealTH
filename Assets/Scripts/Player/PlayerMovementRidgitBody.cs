@@ -7,6 +7,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     [SerializeField] private float sprintSpeed = 8f; // Скорость спринта
     [SerializeField] private float jumpForce = 10f; // Сила прыжка
     [SerializeField] private float jumpCooldown = 1f; // Время между прыжками
+    
 
     // Звуковые эффекты
     [SerializeField] private AudioClip runSound; // Звук бега
@@ -20,6 +21,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private AudioSource audioSource;
     private ParticleSystem dustParticles; // Система частиц пыли
     private PlayerStats playerStats; // Статистика игрока
+    private Camera playerCamera; // Ссылка на камеру
 
     private float lastJumpTime; // Время последнего прыжка
     private bool isRunningSoundPlaying = false; // Флаг для звука бега
@@ -42,6 +44,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void Start()
     {
+        playerCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
         rb = GetComponent<Rigidbody>();
         _inputPlayer = GetComponent<InputPlayer>();
         _animatorPlayer = GetComponent<Animator>();
@@ -136,10 +139,26 @@ public class PlayerMovementRidgitBody : MonoBehaviour
             playerStats.DecreaseMotivation(Time.fixedDeltaTime * 10f);
         }
 
-        Quaternion toRotation = Quaternion.LookRotation(movement, Vector3.up);
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.fixedDeltaTime);
+        // Получаем направление камеры
+        Vector3 cameraForward = playerCamera.transform.forward;
+        cameraForward.y = 0; // Убираем вертикальную составляющую
+        cameraForward.Normalize(); // Нормализуем вектор
 
-        rb.MovePosition(rb.position + movement * (speed * Time.fixedDeltaTime));
+        // Получаем направление движения относительно камеры
+        Vector3 right = playerCamera.transform.right;
+        right.y = 0; // Убираем вертикальную составляющую
+        right.Normalize(); // Нормализуем вектор
+
+        Vector3 desiredMoveDirection = (cameraForward * movement.z + right * movement.x).normalized;
+
+        // Поворачиваем персонажа в направлении движения
+        if (desiredMoveDirection != Vector3.zero)
+        {
+            Quaternion toRotation = Quaternion.LookRotation(desiredMoveDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 720 * Time.fixedDeltaTime);
+        }
+
+        rb.MovePosition(rb.position + desiredMoveDirection * (speed * Time.fixedDeltaTime));
 
         _animatorPlayer.SetBool(SpringHash, isSprinting);
 
