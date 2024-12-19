@@ -4,14 +4,17 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     [SerializeField] private Slider volumeSlider; // Slider для управления громкостью
-    [SerializeField] private AudioSource audioSource; // Источник звука, которым управляет Slider
+    
     [SerializeField] private float defaultVolumeScene = 0.5f; // если мы заходим впервые
 
     private const string VolumePrefKey = "GameVolume"; // Ключ для сохранения громкости
 
+    private AudioSource audioSource; // Источник звука, которым управляет Slider
+
     private void Start()
     {
         // Загружаем сохранённое значение громкости или устанавливаем его по умолчанию
+        audioSource = GetComponentInChildren<AudioSource>();
         float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 0.5f);
         audioSource.volume = savedVolume;
 
