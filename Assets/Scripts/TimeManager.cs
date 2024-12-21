@@ -32,15 +32,14 @@ public class TimeManager : MonoBehaviour
     {
         if (isPauseGame == true)
         {
-            MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGameMenu.ToString());
+            MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGame);
             PauseGame();
         }
         else
         {
-            MenuSwitcher.instance.OpenMenu("");
+            MenuSwitcher.instance.OpenMenu(MenuNames.None);
             ContinionGame();  
         }
-        Debug.Log("StartAndContinuationGame");
         isPauseGame = !isPauseGame;
     }
 
@@ -48,15 +47,14 @@ public class TimeManager : MonoBehaviour
     {
         if (isPauseFail == true)
         {
-            MenuSwitcher.instance.OpenMenu("");
+            MenuSwitcher.instance.OpenMenu(MenuNames.None);
             PauseGame();
         }
         else
         {
-            MenuSwitcher.instance.OpenMenu(MenuNames.FaildGameMenu.ToString());
+            MenuSwitcher.instance.OpenMenu(MenuNames.FailedGame);
         }
 
         isPauseFail = !isPauseFail;
-        Debug.Log("StartAndContinuationFailGame");
     }
 }

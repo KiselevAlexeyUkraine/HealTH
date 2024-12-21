@@ -76,7 +76,7 @@ public class PlayerInvisible : MonoBehaviour
         EnemyBehavior[] enemies = FindObjectsOfType<EnemyBehavior>();
         foreach (var enemy in enemies)
         {
-            enemy.OnPlayerInvisible();
+            //enemy.OnPlayerInvisible();
         }
     }
 
@@ -86,7 +86,7 @@ public class PlayerInvisible : MonoBehaviour
         EnemyBehavior[] enemies = FindObjectsOfType<EnemyBehavior>();
         foreach (var enemy in enemies)
         {
-            enemy.OnPlayerVisible();
+            //enemy.OnPlayerVisible();
         }
     }
 }

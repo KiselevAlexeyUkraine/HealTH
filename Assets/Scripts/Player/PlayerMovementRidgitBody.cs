@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -33,9 +34,13 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private static readonly int WaveHash = Animator.StringToHash("Wave");
     private static readonly int AttackThePlayerHash = Animator.StringToHash("AttackThePlayer");
 
-    public bool IsCamJump { get; set; } = true; // Возможность прыжка
+    public bool CanJump { get; set; } = true; // Возможность прыжка
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] Transform _groundChecker;
+    [SerializeField] private float _groundCheckerRadius;
+    
     public bool isMove = true; // Флаг возможности движения
-    public bool isFinishGame = false; // Флаг завершения игры
+    public bool isFinishGame; // Флаг завершения игры
 
     private bool isWave = false;
     private float waveTimer = 0f; // Таймер для отслеживания времени, стояния на месте
@@ -70,6 +75,8 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void Update()
     {
+        CheckGround();
+        
         if (!isMove) return;
 
         // Проверка на прыжок
@@ -141,13 +148,13 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private void HandleMovement()
     {
         Vector3 movement = _inputPlayer.Movement;
-        bool isSprinting = _inputPlayer.Spriting && playerStats.Motivation > 0f;
+        bool isSprinting = _inputPlayer.Spriting && playerStats.Stamina > 0f;
 
         if (movement.magnitude > 0.2f)
         {
             MovePlayer(movement, isSprinting);
         }
-        else if (movement.magnitude < 0.2f && IsCamJump == true)
+        else if (movement.magnitude < 0.2f && CanJump == true)
         {
             StopMovementEffects();
         }
@@ -161,7 +168,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
         if (isSprinting)
         {
-            playerStats.DecreaseMotivation(Time.fixedDeltaTime * 10f);
+            playerStats.DecreaseStamina(Time.fixedDeltaTime * 10f);
         }
 
         // Получаем направление камеры
@@ -225,42 +232,30 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void Jump()
     {
-        if (IsCamJump)
+        if (!CanJump) return;
+        
+        _animatorPlayer.SetBool(WaveHash, false);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        CanJump = false;
+        isWave = false;
+        lastJumpTime = Time.time;
+            
+        if (!hasJumped)
         {
-            _animatorPlayer.SetBool(WaveHash, false);
-            _animatorPlayer.SetBool(JumpHash, true);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            IsCamJump = false;
-            isWave = false;
-            lastJumpTime = Time.time;
-
-            // Воспроизводим звук прыжка только если он еще не был воспроизведен
-            if (!hasJumped)
-            {
-                PlaySound(jumpSound, false);
-                hasJumped = true; // Устанавливаем флаг, чтобы предотвратить повторное воспроизведение
-            }
-            waveTimer = 0f;
+            PlaySound(jumpSound, false);
+            hasJumped = true;
         }
+        waveTimer = 0f;
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void CheckGround()
     {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Car"))
-        {
-            IsCamJump = true; // Разрешить прыжок при приземлении
-            _animatorPlayer.SetBool(JumpHash, false);
-            hasJumped = false; // Сбрасываем флаг, чтобы разрешить воспроизведение звука прыжка снова
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Car"))
-        {
-            _animatorPlayer.SetBool(JumpHash, true);
-            IsCamJump = false;
-        }
+        var isGround = Physics.CheckSphere(_groundChecker.position, _groundCheckerRadius, _groundLayer.value);
+        
+        CanJump = isGround; 
+        hasJumped = !isGround; 
+        
+        _animatorPlayer.SetBool(JumpHash, hasJumped);
     }
 
     public void FinishGame()
@@ -286,7 +281,6 @@ public class PlayerMovementRidgitBody : MonoBehaviour
             audioSource.clip = clip;
             audioSource.loop = loop;
             audioSource.Play();
-            Debug.Log("Звук воспроизводится: " + clip.name);
         }
     }
 
@@ -295,5 +289,11 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         audioSource.Stop();
         isRunningSoundPlaying = false;
         isSprintingSoundPlaying = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_groundChecker.position, _groundCheckerRadius);
     }
 }
