@@ -7243,7 +7243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130599023203981404}
   serializedVersion: 2
-  m_LocalRotation: {x: 6.741635e-10, y: 0.9998811, z: 0.015423063, w: -0.00000004370619}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24143,7 +24143,7 @@ GameObject:
   - component: {fileID: 6551854104601882754}
   - component: {fileID: 5305597395104043788}
   - component: {fileID: 4962413208330276476}
-  - component: {fileID: 2052662485510920023}
+  - component: {fileID: 396580042603640360}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -24439,27 +24439,22 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 0.2
   dashCooldown: 1
---- !u!65 &2052662485510920023
-BoxCollider:
+--- !u!114 &396580042603640360
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9050715669797067631}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.3721741, y: 0.13636953, z: 0.25086844}
-  m_Center: {x: 0.04413627, y: -1.0551125, z: 0.04463017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 681a96aa2fa15834ea23503d0a2199d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invisibilityKey: 120
+  invisibilityDuration: 5
+  invisibilityCooldown: 10
+  invisibilityPrefab: {fileID: 4207657900066410637}
 --- !u!1 &9063173181601275680
 GameObject:
   m_ObjectHideFlags: 0

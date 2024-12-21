@@ -1,5 +1,3 @@
-using Cinemachine;
-using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,28 +7,11 @@ public class SceneSwitcher : MonoBehaviour
 
     public int CurrentScene { get => SceneManager.GetActiveScene().buildIndex; }
 
-    [SerializeField] private GameObject[] cameras;
+    //[SerializeField] private GameObject[] cameras;
 
     private void Awake()
     {
         instance = this;
-    }
-
-    private void Start()
-    {
-        // Проверяем, какая сцена активна и открываем соответствующее меню
-        if (SceneManager.GetActiveScene().buildIndex == (int)MenuNames.MainMenu)
-        {
-            MenuSwitcher.instance.OpenMenu(MenuNames.MainMenu.ToString());
-            SetActivaCamerasOnScene(CurrentScene);
-            TimeManager.instance.ContinionGame();
-        }
-        else if (SceneManager.GetActiveScene().buildIndex > (int)MenuNames.MainMenu)
-        {
-            SetActivaCamerasOnScene(1);
-            TimeManager.instance.ContinionGame();
-            MenuSwitcher.instance.OpenMenu("");
-        }
     }
 
     // Метод для перехода на сцену по индексу
@@ -39,24 +20,7 @@ public class SceneSwitcher : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
-    private void SetActivaCamerasOnScene(int scene)
-    {
-        foreach (var cam in cameras)
-        {
-            if (scene == 0)
-            {
-                cameras[scene].SetActive(true);
-            }
-            else if (scene == 1)
-            {
-                cameras[scene].SetActive(true);
-            }
-            else
-            {
-                cam.SetActive(false);
-            }
-        }
-    }
+
 
     // Метод для перехода на следующую сцену
     public void LoadNextScene()

@@ -3,7 +3,7 @@ using UnityEngine.AI;
 
 public class CarForGame : MonoBehaviour
 {
-    [SerializeField] private float motivationLoss = 10f; // Сколько мотивации теряет игрок
+    private int motivationLoss = 1; // Сколько мотивации теряет игрок
     [SerializeField] private Transform[] patrolPoints; // Массив точек патрулирования
     [SerializeField] private float waitTimeAtPoint = 2f; // Время ожидания на каждой точке
     [SerializeField] private float damageInterval = 1f; // Интервал времени между ударами
