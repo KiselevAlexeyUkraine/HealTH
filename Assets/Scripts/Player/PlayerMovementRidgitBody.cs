@@ -7,7 +7,6 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     [SerializeField] private float sprintSpeed = 8f; // Скорость спринта
     [SerializeField] private float jumpForce = 10f; // Сила прыжка
     [SerializeField] private float jumpCooldown = 1f; // Время между прыжками
-    
 
     // Звуковые эффекты
     [SerializeField] private AudioClip runSound; // Звук бега
@@ -42,6 +41,12 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private float waveTimer = 0f; // Таймер для отслеживания времени, стояния на месте
     [SerializeField] private float waveWaitTime = 10f; // Время, через которое игрок начинает анимацию wave, если он стоит на месте
 
+    // Переменные для восстановления мотивации
+    [SerializeField] private float stationaryRecoveryAmount = 2f; // Количество восстановления мотивации при стоянии
+    [SerializeField] private float movingRecoveryAmount = 1f; // Количество восстановления мотивации при движении
+    [SerializeField] private float recoveryInterval = 1f; // Интервал времени между восстановлением мотивации
+    private float lastRecoveryTime; // Время последнего восстановления мотивации
+
     private void Start()
     {
         playerCamera = GameObject.Find("Main Camera").GetComponent<Camera>();
@@ -53,6 +58,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         playerStats = GetComponent<PlayerStats>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         lastJumpTime = -jumpCooldown; // Чтобы игрок мог прыгнуть сразу
+        lastRecoveryTime = Time.time; // Инициализация времени последнего восстановления
     }
 
     private void FixedUpdate()
@@ -72,6 +78,9 @@ public class PlayerMovementRidgitBody : MonoBehaviour
             Jump();
         }
 
+        // Восстановление мотивации
+        RecoverMotivation();
+
         // Если игрок не прыгает, но стоит на месте, воспроизводим звук прыжка
         if (_inputPlayer.Movement.magnitude <= 0.2f && _inputPlayer.Jump)
         {
@@ -88,6 +97,22 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         }
 
         _animatorPlayer.SetFloat(MoveSpeedHash, _inputPlayer.Movement.magnitude);
+    }
+
+    private void RecoverMotivation()
+    {
+        if (Time.time - lastRecoveryTime >= recoveryInterval)
+        {
+            if (_inputPlayer.Movement.magnitude <= 0.2f) // Игрок стоит на месте
+            {
+                playerStats.IncreaseMotivation(stationaryRecoveryAmount);
+            }
+            else // Игрок в движении
+            {
+                playerStats.IncreaseMotivation(movingRecoveryAmount);
+            }
+            lastRecoveryTime = Time.time; // Обновляем время последнего восстановления
+        }
     }
 
     private void HandleWaveAnimation()
@@ -219,9 +244,9 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Car"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Car"))
         {
             IsCamJump = true; // Разрешить прыжок при приземлении
             _animatorPlayer.SetBool(JumpHash, false);
@@ -229,9 +254,9 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    private void OnCollisionExit(Collision collision)
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Car"))
+        if (collision.gameObject.CompareTag("Ground") || collision.gameObject.CompareTag("Car"))
         {
             _animatorPlayer.SetBool(JumpHash, true);
             IsCamJump = false;
@@ -262,14 +287,6 @@ public class PlayerMovementRidgitBody : MonoBehaviour
             audioSource.loop = loop;
             audioSource.Play();
             Debug.Log("Звук воспроизводится: " + clip.name);
-        }
-    }
-
-    private void StopSound(AudioClip clip)
-    {
-        if (audioSource.clip == clip)
-        {
-            audioSource.Stop();
         }
     }
 

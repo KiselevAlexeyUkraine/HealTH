@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WellAndOilPuddle : MonoBehaviour
 {
-    [SerializeField] private float motivationLoss = 10f; // Сколько мотивации теряет игрок
+    private int motivationLoss = 1; // Сколько мотивации теряет игрок
     [SerializeField] private float damageAmount = 5f; // Сколько урона получает игрок
     [SerializeField] private float damageInterval = 1f; // Интервал между нанесением урона в секундах
 

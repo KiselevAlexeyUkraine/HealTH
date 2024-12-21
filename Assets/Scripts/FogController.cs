@@ -10,17 +10,18 @@ public class FogController : MonoBehaviour
         transform.Translate(Vector3.forward * speed * TimeManager.instance.TimeDeltaTime);
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision collision)
     {
         // Проверяем, если туман столкнулся с игроком
-        if (other.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            // Здесь можно добавить логику завершения игры
+            // Логика завершения игры
             Debug.Log("Game Over!");
-            PlayerStats playerStats = other.gameObject.GetComponent<PlayerStats>();
-            playerStats.DecreaseMotivationForEnemy(100f);
+            PlayerStats playerStats = collision.gameObject.GetComponent<PlayerStats>();
+            if (playerStats != null)
+            {
+                playerStats.FaildGame();
+            }
         }
     }
-
-
 }

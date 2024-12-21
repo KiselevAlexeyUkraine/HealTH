@@ -7243,7 +7243,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1130599023203981404}
   serializedVersion: 2
-  m_LocalRotation: {x: -6.7417444e-10, y: -0.9998811, z: -0.015423311, w: 0.000000043706194}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -10815,8 +10815,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2761088816941834522}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000027146974, y: -0.9980836, z: -0.06188069, w: 0.00000004378579}
-  m_LocalPosition: {x: 0.27827665, y: -1.1594126, z: 5.33}
+  m_LocalRotation: {x: -3.4141915e-11, y: 0.9980836, z: 0.061880406, w: 5.5068294e-10}
+  m_LocalPosition: {x: 0.27827665, y: -1.1594117, z: 5.33}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11752,8 +11752,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 2668009338359758674}
-  cameraController: {fileID: 0}
-  UIPlayerStatsResult: {fileID: 0}
   playerStats: {fileID: 522509667950105780}
   finalScoreTextCoin: {fileID: 2099423955677412157}
   finalScoreTextDollar: {fileID: 2924011751374561823}
@@ -18144,7 +18142,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5424877810905986513}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000027048903, y: -0.9980836, z: -0.061880674, w: 0.000000043627626}
+  m_LocalRotation: {x: 0.0000000027048785, y: 0.9980836, z: 0.06188041, w: -0.00000004362762}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -21119,7 +21117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5b188ab149685f4292e73015f18cf1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameras: []
 --- !u!114 &6448443065608283568
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23423,7 +23420,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8758619980403694465}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.0000000016921895, y: -0.9992504, z: -0.03871278, w: 0.00000004367863}
+  m_LocalRotation: {x: 0.000000001692178, y: 0.9992504, z: 0.03871252, w: -0.00000004367862}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -24146,7 +24143,7 @@ GameObject:
   - component: {fileID: 6551854104601882754}
   - component: {fileID: 5305597395104043788}
   - component: {fileID: 4962413208330276476}
-  - component: {fileID: 2052662485510920023}
+  - component: {fileID: 396580042603640360}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -24217,6 +24214,9 @@ MonoBehaviour:
   isMove: 1
   isFinishGame: 0
   waveWaitTime: 4
+  stationaryRecoveryAmount: 2
+  movingRecoveryAmount: 1
+  recoveryInterval: 1
 --- !u!114 &7994654039995979939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24241,7 +24241,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42c1b762683a5b341b4e87fa8b3479a4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  textTips: {fileID: 0}
 --- !u!54 &6676171037807559192
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -24266,9 +24265,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!136 &7786571415100012528
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -24305,10 +24304,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   motivation: 100
-  scoreTextCoins: {fileID: 0}
-  scoreTextDollars: {fileID: 0}
-  motivationImage: {fileID: 0}
-  playerMovementRidgitBody: {fileID: 0}
+  health: 5
+  imagesHealth:
+  - {fileID: 2712084282938665665}
+  - {fileID: 786436183761030531}
+  - {fileID: 7823849527814598808}
+  - {fileID: 4518946602691219750}
+  - {fileID: 2095194120533636796}
   coinPickupSound: {fileID: 8300000, guid: e30dfbc4c809cd142b2361ef084b8f89, type: 3}
   dollarPickupSound: {fileID: 8300000, guid: 03e1e1dba60e2ab46a0fad5fe93eb4c8, type: 3}
   brightPickupSound: {fileID: 8300000, guid: d81739f675b5921418113abac2e47c9a, type: 3}
@@ -24381,7 +24383,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -24437,27 +24439,22 @@ MonoBehaviour:
   dashDistance: 5
   dashDuration: 0.2
   dashCooldown: 1
---- !u!65 &2052662485510920023
-BoxCollider:
+--- !u!114 &396580042603640360
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9050715669797067631}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.3721741, y: 0.13636953, z: 0.25086844}
-  m_Center: {x: 0.04413627, y: -1.0551125, z: 0.04463017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 681a96aa2fa15834ea23503d0a2199d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  invisibilityKey: 120
+  invisibilityDuration: 5
+  invisibilityCooldown: 10
+  invisibilityPrefab: {fileID: 4207657900066410637}
 --- !u!1 &9063173181601275680
 GameObject:
   m_ObjectHideFlags: 0

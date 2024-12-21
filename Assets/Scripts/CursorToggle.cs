@@ -4,18 +4,29 @@ using TMPro;
 public class CursorToggle : MonoBehaviour
 {
     private bool isCursorVisible = false; // Состояние видимости курсора
-    [SerializeField] private TMP_Text textTips;
+    private TMP_Text textTips;
 
     private PlayerStats playerStats;
     private PlayerMovementRidgitBody playerMovementRidgitBody;
+    private GameObject UiStatsPlayer;
+
+
+    private void Awake()
+    {
+        textTips = GameObject.Find("Text (TMP)Tips").GetComponent<TMP_Text>();
+        UiStatsPlayer = GameObject.Find("UIPlayerStats");
+    }
 
     private void Start()
     {
+        
         Cursor.lockState = CursorLockMode.Locked;
         MenuSwitcher.instance.OpenMenu("");
+        TimeManager.instance.ContinionGame();
         textTips.text = "НАЖМИ \"Esc\"\r\nМеню";
         playerStats = GetComponent<PlayerStats>();
         playerMovementRidgitBody = GetComponent<PlayerMovementRidgitBody>();
+        CurrentSceneForStats();
     }
 
     void Update()
@@ -24,6 +35,18 @@ public class CursorToggle : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ToggleCursorVisibility();
+        }
+    }
+
+    private void CurrentSceneForStats()
+    {
+        if (SceneSwitcher.instance.CurrentScene == 0)
+        {
+            UiStatsPlayer.SetActive(false);
+        }
+        else
+        {
+            UiStatsPlayer.SetActive(true);
         }
     }
 
@@ -92,8 +115,14 @@ public class CursorToggle : MonoBehaviour
         }
     }
 
-    public void IsGameOrContinionGameMenu() 
+    public void IsGameOrContinionGameMenu() // для нашей кнопки выхода с меню громкости
     {
+        if (SceneSwitcher.instance.CurrentScene == 0)
+        {
+            MenuSwitcher.instance.OpenMenu("MainMenu"); // Открываем главное меню
+            return;
+        }
+        
         if (playerStats.IsDeath == false && playerMovementRidgitBody.isFinishGame == false)
         {
             MenuSwitcher.instance.OpenMenu("ContinuationGameMenu");

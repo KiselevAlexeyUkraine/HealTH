@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class ObjectSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject objectPrefab; // Префаб игрока
-    [SerializeField] private Transform spawnPoint; // Точка спавна
+    [SerializeField] private GameObject objectPrefab; // РџСЂРµС„Р°Р± РёРіСЂРѕРєР°
+    [SerializeField] private Transform spawnPoint; // РўРѕС‡РєР° СЃРїР°РІРЅР°
 
     private void Start()
     {
@@ -12,16 +12,16 @@ public class ObjectSpawner : MonoBehaviour
 
     private void SpawnPlayers()
     {
-        // Проверяем, что префаб игрока и точка спавна заданы
+        // РџСЂРѕРІРµСЂСЏРµРј, С‡С‚Рѕ РїСЂРµС„Р°Р± РёРіСЂРѕРєР° Рё С‚РѕС‡РєР° СЃРїР°РІРЅР° Р·Р°РґР°РЅС‹
         if (objectPrefab != null && spawnPoint != null)
         {
-            // Спавним игрока в заданной позиции
+            // РЎРїР°РІРЅРёРј РёРіСЂРѕРєР° РІ Р·Р°РґР°РЅРЅРѕР№ РїРѕР·РёС†РёРё
             Instantiate(objectPrefab, spawnPoint.position, spawnPoint.rotation);
-            Debug.Log("Обьект успешно заспавнен в позиции: " + spawnPoint.position);
+            Debug.Log("РћР±СЊРµРєС‚ СѓСЃРїРµС€РЅРѕ Р·Р°СЃРїР°РІРЅРµРЅ РІ РїРѕР·РёС†РёРё: " + spawnPoint.position);
         }
         else
         {
-            Debug.LogError("Префаб игрока или точка спавна не заданы!");
+            Debug.LogError("РџСЂРµС„Р°Р± РёРіСЂРѕРєР° РёР»Рё С‚РѕС‡РєР° СЃРїР°РІРЅР° РЅРµ Р·Р°РґР°РЅС‹!");
         }
     }
 }
