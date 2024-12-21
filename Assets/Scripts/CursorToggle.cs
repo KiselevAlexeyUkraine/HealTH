@@ -1,35 +1,25 @@
 using UnityEngine;
-using TMPro;
 
 public class CursorToggle : MonoBehaviour
 {
-    private bool isCursorVisible = false; // Состояние видимости курсора
-    private TMP_Text textTips;
 
-    private PlayerStats playerStats;
+    [SerializeField] private GameObject UiStatsPlayer;
+
     private PlayerMovementRidgitBody playerMovementRidgitBody;
-    private GameObject UiStatsPlayer;
-
-
-    private void Awake()
-    {
-        textTips = GameObject.Find("Text (TMP)Tips").GetComponent<TMP_Text>();
-        UiStatsPlayer = GameObject.Find("UIPlayerStats");
-    }
-
+    private PlayerStats playerStats;
+    private bool isCursorVisible;
+    
     private void Start()
     {
-        
         Cursor.lockState = CursorLockMode.Locked;
-        MenuSwitcher.instance.OpenMenu("");
+        MenuSwitcher.instance.OpenMenu(MenuNames.None);
         TimeManager.instance.ContinionGame();
-        textTips.text = "НАЖМИ \"Esc\"\r\nМеню";
         playerStats = GetComponent<PlayerStats>();
         playerMovementRidgitBody = GetComponent<PlayerMovementRidgitBody>();
         CurrentSceneForStats();
     }
 
-    void Update()
+    private void Update()
     {
         // Проверяем, была ли нажата клавиша ESC
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -70,12 +60,7 @@ public class CursorToggle : MonoBehaviour
             {
                 TimeManager.instance.ContinionGame(); // Продолжаем игру
             }
-            MenuSwitcher.instance.OpenMenu(""); // Закрываем меню
-            if (textTips != null)
-            {
-                textTips.text = "НАЖМИ \"Esc\"\r\nМеню";
-            }
-
+            MenuSwitcher.instance.OpenMenu(MenuNames.None); // Закрываем меню
         }
     }
 
@@ -83,32 +68,24 @@ public class CursorToggle : MonoBehaviour
     {
         if (SceneSwitcher.instance.CurrentScene == 0)
         {
-            MenuSwitcher.instance.OpenMenu("MainMenu"); // Открываем главное меню
+            MenuSwitcher.instance.OpenMenu(MenuNames.MainMenu); // Открываем главное меню
             TimeManager.instance.PauseGame(); // Пауза игры
-            if (textTips != null)
-            {
-                textTips.text = "НАЖМИ \"Esc\"\r\nОбзор";
-            }
         }
         else if (SceneSwitcher.instance.CurrentScene > 0)
         {
-            if (playerStats.IsDeath == true)
+            if (playerStats.IsDeath)
             {
-                MenuSwitcher.instance.OpenMenu(MenuNames.FaildGameMenu.ToString());
+                MenuSwitcher.instance.OpenMenu(MenuNames.FailedGame);
             }
             else
             {
-                MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGameMenu.ToString());
+                MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGame);
                 
             }
-
-            if (textTips != null)
-            {
-                textTips.text = "НАЖМИ \"Esc\"\r\nОбзор";
-            }
+            
             if (playerMovementRidgitBody.isMove == false)
             {
-                MenuSwitcher.instance.OpenMenu("ResultGameMenu");
+                MenuSwitcher.instance.OpenMenu(MenuNames.ResultGame);
             }
 
             TimeManager.instance.PauseGame();
@@ -119,23 +96,21 @@ public class CursorToggle : MonoBehaviour
     {
         if (SceneSwitcher.instance.CurrentScene == 0)
         {
-            MenuSwitcher.instance.OpenMenu("MainMenu"); // Открываем главное меню
+            MenuSwitcher.instance.OpenMenu(MenuNames.MainMenu); // Открываем главное меню
             return;
         }
         
         if (playerStats.IsDeath == false && playerMovementRidgitBody.isFinishGame == false)
         {
-            MenuSwitcher.instance.OpenMenu("ContinuationGameMenu");
-            Debug.Log("Продолжить игру выводит");
+            MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGame);
         }
-        else if (playerStats.IsDeath == true)
+        else if (playerStats.IsDeath)
         {
-            MenuSwitcher.instance.OpenMenu("FaildGameMenu");
+            MenuSwitcher.instance.OpenMenu(MenuNames.FailedGame);
         }
-        else if (playerMovementRidgitBody.isFinishGame == true)
+        else if (playerMovementRidgitBody.isFinishGame)
         {
-            MenuSwitcher.instance.OpenMenu("ResultGameMenu");
-            Debug.Log("Результат игру выводит");
+            MenuSwitcher.instance.OpenMenu(MenuNames.ResultGame);
         }
     }
 }

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Menu : MonoBehaviour
 {
     // Имя меню, которое можно установить в инспекторе Unity
-    public string menuName;
+    public MenuNames menuName;
 
     // Метод для открытия меню
     public void Open()

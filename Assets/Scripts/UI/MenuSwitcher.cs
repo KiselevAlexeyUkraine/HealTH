@@ -14,9 +14,8 @@ public class MenuSwitcher : MonoBehaviour
         instance = this;
     }
 
-
     // Метод для открытия меню по имени (для кнопки)
-    public void OpenMenu(string menuName)
+    public void OpenMenu(MenuNames menuName)
     {
         // Проходим по каждому меню в списке
         foreach (Menu menu in _menuList)
@@ -38,8 +37,13 @@ public class MenuSwitcher : MonoBehaviour
 }
 public enum MenuNames
 {
-    MainMenu = 0,
-    GameMenu = 1,
-    ContinuationGameMenu,
-    FaildGameMenu
+    None,
+    MainMenu,
+    GameMenu,
+    ContinuationGame,
+    ResultGame,
+    FailedGame,
+    Authors,
+    Settings,
+    
 }
