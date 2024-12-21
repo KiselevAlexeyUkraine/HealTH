@@ -35532,7 +35532,7 @@ PrefabInstance:
     - target: {fileID: 1354481950879089862, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: field of view
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1354481950879089862, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
@@ -35542,37 +35542,37 @@ PrefabInstance:
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.241724
+      value: 100.258286
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.45858836
+      value: 14.458589
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.0300002
+      value: 498.07
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.0000022170075
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.00000013745267
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9980836
       objectReference: {fileID: 0}
     - target: {fileID: 1845295806585510145, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.061880372
       objectReference: {fileID: 0}
     - target: {fileID: 2315322582054222975, guid: 103d821df74d5a742b255b5884582654,
         type: 3}
@@ -41664,7 +41664,7 @@ PrefabInstance:
     - target: {fileID: 1228233298854701927, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: field of view
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 1238391300785435369, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
@@ -41824,37 +41824,37 @@ PrefabInstance:
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.27827665
+      value: 116.77829
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.15941167
+      value: 13.840589
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.67
+      value: 498.43
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: -0.0000022170075
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.00000013745267
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.9980836
       objectReference: {fileID: 0}
     - target: {fileID: 6310248052756807621, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.061880372
       objectReference: {fileID: 0}
     - target: {fileID: 7491922277994251356, guid: 78e0bf5cce3dcd94b88f3971dc59bd11,
         type: 3}
