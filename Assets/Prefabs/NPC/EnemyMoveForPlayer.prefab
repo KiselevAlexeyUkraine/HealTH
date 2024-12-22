@@ -3501,6 +3501,7 @@ MonoBehaviour:
   patrolClip: {fileID: 8300000, guid: 5a12c3ab018e526479fe2a5fbab5810c, type: 3}
   chaseClip: {fileID: 8300000, guid: bea6141389fda044494f57a166b3175a, type: 3}
   attackClip: {fileID: 8300000, guid: 2009754297192b24c9d773e7861571c1, type: 3}
+  chaseDuration: 10
 --- !u!95 &1929578511326210467
 Animator:
   serializedVersion: 5
