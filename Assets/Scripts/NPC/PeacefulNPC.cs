@@ -3,17 +3,17 @@ using UnityEngine.AI;
 
 public class PeacefulNPC : MonoBehaviour
 {
-    public Transform[] patrolPoints; // Точки для патрулирования
-    public float patrolSpeed = 2f; // Скорость патрулирования
-    public float waitTimeAtPatrolPoint = 2f; // Время ожидания на точке патрулирования
-    public AudioClip patrolClip; // Звук для патрулирования
+    [SerializeField] Transform[] patrolPoints; // Точки для патрулирования
+    [SerializeField] float patrolSpeed = 2f; // Скорость патрулирования
+    [SerializeField] float waitTimeAtPatrolPoint = 2f; // Время ожидания на точке патрулирования
+    [SerializeField]  AudioClip patrolClip; // Звук для патрулирования
 
-    private NavMeshAgent agent;
-    private Animator animator; // Аниматор для управления анимациями
-    private AudioSource audioSource; // Источник звука
-    private int currentPatrolIndex;
-    private bool isWaiting;
-    private float waitTimer;
+    NavMeshAgent agent;
+    Animator animator; // Аниматор для управления анимациями
+    AudioSource audioSource; // Источник звука
+    int currentPatrolIndex;
+    bool isWaiting;
+    float waitTimer;
 
     void Start()
     {
@@ -44,7 +44,7 @@ public class PeacefulNPC : MonoBehaviour
         Patrol();
     }
 
-    private void Patrol()
+    void Patrol()
     {
         agent.speed = patrolSpeed;
 
@@ -69,7 +69,7 @@ public class PeacefulNPC : MonoBehaviour
         }
     }
 
-    private void MoveToNextPatrolPoint()
+    void MoveToNextPatrolPoint()
     {
         if (patrolPoints.Length == 0) return;
 
@@ -78,7 +78,7 @@ public class PeacefulNPC : MonoBehaviour
 
     }
 
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         foreach (var point in patrolPoints)
