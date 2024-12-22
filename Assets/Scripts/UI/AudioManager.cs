@@ -3,22 +3,20 @@ using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    [SerializeField] private Slider volumeSlider; // Slider для управления громкостью
+    [SerializeField] private Slider volumeSlider; 
     
-    [SerializeField] private float defaultVolumeScene = 0.5f; // если мы заходим впервые
+    [SerializeField] private float defaultVolumeScene = 0.5f; 
 
-    private const string VolumePrefKey = "GameVolume"; // Ключ для сохранения громкости
+    private const string VolumePrefKey = "GameVolume"; 
 
-    private AudioSource audioSource; // Источник звука, которым управляет Slider
+    private AudioSource audioSource; 
 
     private void Start()
     {
-        // Загружаем сохранённое значение громкости или устанавливаем его по умолчанию
         audioSource = GetComponentInChildren<AudioSource>();
-        float savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 0.5f);
+        var savedVolume = PlayerPrefs.GetFloat(VolumePrefKey, 0.5f);
         audioSource.volume = savedVolume;
 
-        // Если Slider задан, настраиваем его
         if (volumeSlider != null)
         {
             volumeSlider.value = savedVolume;
@@ -26,15 +24,14 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void SetVolume(float value)
+    private void SetVolume(float value)
     {
-        audioSource.volume = value; // Обновляем громкость
-        PlayerPrefs.SetFloat(VolumePrefKey, value); // Сохраняем значение громкости
+        audioSource.volume = Mathf.Clamp(value, 0f, 1f);
+        PlayerPrefs.SetFloat(VolumePrefKey, value); 
     }
 
     private void OnDestroy()
     {
-        // Убираем слушателя при уничтожении объекта
         if (volumeSlider != null)
         {
             volumeSlider.onValueChanged.RemoveListener(SetVolume);

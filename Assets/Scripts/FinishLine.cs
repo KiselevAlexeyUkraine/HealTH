@@ -3,36 +3,29 @@ using TMPro;
 
 public class FinishLine : MonoBehaviour
 {
-    [SerializeField] private PlayerMovementRidgitBody playerMovement; // Ссылка на скрипт движения игрока
+    [SerializeField] private PlayerMovementRidgitBody playerMovement;
 
-    [SerializeField] private PlayerStats playerStats; // Ссылка на скрипт статистики игрока
-    [SerializeField] private TMP_Text finalScoreTextCoin; // Текст для отображения итогового счета монет
-    [SerializeField] private TMP_Text finalScoreTextDollar; // Текст для отображения итогового счета долларов
-    [SerializeField] private TMP_Text finalScoreTextTime; // Текст для отображения времени
+    [SerializeField] private PlayerStats playerStats; 
+    [SerializeField] private TMP_Text finalScoreTextCoin; 
+    [SerializeField] private TMP_Text finalScoreTextDollar; 
+    [SerializeField] private TMP_Text finalScoreTextTime; 
     [SerializeField] private CursorToggle cursorToggle;
-
-
-
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
-            // Выводим итоговый счет
             ShowFinalScore();
         }
     }
 
     private void ShowFinalScore()
     {
-        // Отключаем движение игрока
         playerMovement.FinishGame();
-
-        // Включаем камеру для вращения
         cursorToggle.ToggleCursorVisibility();
 
-        // Отображаем результаты
-        finalScoreTextCoin.text = "Монеты: " + playerStats.ScoreCoins; // Измените на нужные значения
-        finalScoreTextDollar.text = "Доллары: " + playerStats.ScoreDollars; // Измените на нужные значения
-        finalScoreTextTime.text = "Время: " + playerStats.GetFormattedPlayTime(); // Отображаем время
+        finalScoreTextCoin.text = "Монеты: " + playerStats.ScoreCoins; 
+        finalScoreTextDollar.text = "Доллары: " + playerStats.ScoreDollars; 
+        finalScoreTextTime.text = "Время: " + playerStats.GetFormattedPlayTime(); 
     }
 }
