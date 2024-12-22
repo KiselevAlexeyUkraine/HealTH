@@ -28,6 +28,7 @@ public class AudioManager : MonoBehaviour
     {
         audioSource.volume = Mathf.Clamp(value, 0f, 1f);
         PlayerPrefs.SetFloat(VolumePrefKey, value); 
+        PlayerPrefs.Save();
     }
 
     private void OnDestroy()
@@ -37,10 +38,4 @@ public class AudioManager : MonoBehaviour
             volumeSlider.onValueChanged.RemoveListener(SetVolume);
         }
     }
-
-    //private void OnApplicationQuit()
-    //{
-    //    // Сохраняем изменения громкости при выходе из игры
-    //    PlayerPrefs.Save();
-    //}
 }
