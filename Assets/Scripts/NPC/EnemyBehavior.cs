@@ -3,14 +3,16 @@ using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats; // Ссылка на скрипт PlayerStats
+    private PlayerStats playerStats; // Ссылка на скрипт PlayerStats
     [SerializeField] private Transform[] patrolPoints; // Точки для патрулирования
     [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] private float chaseSpeed = 5f;
     [SerializeField] private float waitTimeAtPatrolPoint = 2f; // Время ожидания на точке патрулирования
     [SerializeField] private float attackRadius = 1.5f; // Радиус атаки
-    [SerializeField] private float damage = 10f;
+    private int damage = 1;
     [SerializeField] private float detectionRadius = 8f; // Радиус обнаружения игрока
+    [SerializeField] private float sphereCastRadius = 0.5f; // Радиус сферы для рейкаста
+    [SerializeField] private float sphereCastDistance = 10f; // Длина рейкаста
     [SerializeField] private float playerHeightThreshold = 1f; // Пороговое значение по Y для отмены преследования
     [SerializeField] private float timeAboveThreshold = 5f; // Время, в течение которого игрок должен оставаться выше порога
 
@@ -25,14 +27,21 @@ public class EnemyBehavior : MonoBehaviour
     private int currentPatrolIndex;
     private bool isChasing;
     private bool isAttacking;
+    private bool isReturningToPatrol; // Новое состояние для возвращения к патрулированию
     private float waitTimer;
     private bool isWaiting;
 
     // Новые переменные для отслеживания времени
     private float timeAboveThresholdCounter = 0f; // Таймер для отслеживания времени выше порога
+    private float chaseDuration = 5f; // Время преследования (изменено на 5 секунд)
+    private float chaseTimer = 0f; // Таймер для отслеживания времени преследования
+
+    // Переменная для отслеживания состояния невидимости игрока
+    private bool isPlayerInvisible = false;
 
     void Start()
     {
+        playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -57,6 +66,25 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
+        // Проверяем расстояние до игрока
+        float distanceToPlayer = player != null ? Vector3.Distance(transform.position, player.position) : Mathf.Infinity;
+
+        // Проверяем расстояние с помощью SphereCast
+        RaycastHit hit;
+        Vector3 sphereCastOrigin = transform.position + Vector3.up; // Начальная точка рейкаста
+        bool playerDetected = Physics.SphereCast(sphereCastOrigin, sphereCastRadius, transform.forward, out hit, sphereCastDistance);
+
+        if (playerDetected && hit.collider.CompareTag("Player"))
+        {
+            player = hit.collider.transform;
+            // Проверяем, видим ли игрок
+            if (!isPlayerInvisible && !isChasing && !isReturningToPatrol)
+            {
+                isChasing = true; // Начинаем преследование
+                chaseTimer = 0f; // Сбрасываем таймер преследования
+            }
+        }
+
         // Проверяем, находится ли игрок выше порогового значения по Y
         if (player != null)
         {
@@ -82,7 +110,20 @@ public class EnemyBehavior : MonoBehaviour
 
         if (isChasing)
         {
-            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+            chaseTimer += Time.deltaTime; // Увеличиваем таймер преследования
+
+            if (chaseTimer >= chaseDuration)
+            {
+                isChasing = false; // Останавливаем преследование
+                isReturningToPatrol = true; // Устанавливаем состояние возвращения к патрулированию
+                agent.isStopped = false; // Убедимся, что агент не остановлен
+                if (audioSource != null && chaseClip != null)
+                {
+                    audioSource.Stop(); // Останавливаем звук преследования
+                }
+                MoveToNextPatrolPoint(); // Возвращаемся к патрулированию
+                return; // Выходим из метода
+            }
 
             if (distanceToPlayer <= attackRadius)
             {
@@ -93,9 +134,42 @@ public class EnemyBehavior : MonoBehaviour
                 ChasePlayer();
             }
         }
+        else if (isReturningToPatrol)
+        {
+            // Если игрок находится в радиусе обнаружения, начинаем преследование
+            if (distanceToPlayer <= detectionRadius && !isPlayerInvisible)
+            {
+                isChasing = true; // Возобновляем преследование
+                chaseTimer = 0f; // Сбрасываем таймер преследования
+                isReturningToPatrol = false; // Сбрасываем состояние возвращения
+                return; // Выходим из метода
+            }
+
+            // Если враг возвращается к патрульной точке, не реагируем на игрока
+            if (Vector3.Distance(transform.position, patrolPoints[currentPatrolIndex].position) < 0.5f)
+            {
+                isReturningToPatrol = false; // Сбрасываем состояние возвращения
+                MoveToNextPatrolPoint(); // Возвращаемся к патрулированию
+            }
+        }
         else
         {
-            Patrol();
+            // Проверяем, находится ли игрок в радиусе обнаружения
+            if (distanceToPlayer <= detectionRadius && !isPlayerInvisible)
+            {
+                isChasing = true; // Начинаем преследование
+                chaseTimer = 0f; // Сбрасываем таймер преследования
+            }
+            else
+            {
+                Patrol();
+            }
+        }
+
+        // Проверка на атаку, даже если игрок невидим
+        if (distanceToPlayer <= attackRadius && player != null && !isPlayerInvisible)
+        {
+            AttackPlayer();
         }
     }
 
@@ -137,6 +211,13 @@ public class EnemyBehavior : MonoBehaviour
             animator.SetBool("IsWalking", true);
             animator.SetBool("IsIdle", false); // Сбрасываем булевое значение ожидания
         }
+
+        if (audioSource != null && patrolClip != null && !audioSource.isPlaying)
+        {
+            audioSource.clip = patrolClip;
+            audioSource.loop = true;
+            audioSource.Play(); // Включаем звук патрулирования
+        }
     }
 
     private void ChasePlayer()
@@ -162,20 +243,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             audioSource.clip = chaseClip;
             audioSource.loop = true;
-            audioSource.Play();
-        }
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Car"))
-        {
-            // Останавливаем преследование игрока
-            isChasing = false;
-            Debug.Log("Мы не бежим за игроком");
-
-            // Возвращаемся к патрулированию
-            MoveToNextPatrolPoint();
+            audioSource.Play(); // Включаем звук преследования
         }
     }
 
@@ -188,7 +256,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             // Поворачиваем врага в сторону игрока
             Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
+            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer); // Исправлено: инициализация переменной
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // Плавный поворот
         }
 
@@ -206,13 +274,32 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    // Этот метод будет вызываться в анимации атаки
+    public void AttackPlayerAnimationEvent()
+    {
+        if (playerStats != null)
+        {
+            playerStats.DecreaseMotivationForEnemy(damage); // Уменьшаем здоровье игрока
+        }
+
+        if (audioSource != null && attackClip != null)
+        {
+            audioSource.Play(); // Включаем звук атаки
+        }
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
         {
             Debug.Log("Player detected - attack!");
             player = other.transform;
-            isChasing = true;
+            // Проверяем, видим ли игрок
+            if (!isPlayerInvisible && !isChasing && !isReturningToPatrol)
+            {
+                isChasing = true; // Начинаем преследование
+                chaseTimer = 0f; // Сбрасываем таймер преследования при обнаружении игрока
+            }
         }
     }
 
@@ -238,7 +325,7 @@ public class EnemyBehavior : MonoBehaviour
             {
                 audioSource.clip = patrolClip;
                 audioSource.loop = true;
-                audioSource.Play();
+                audioSource.Play(); // Включаем звук патрулирования
             }
         }
     }
@@ -250,11 +337,40 @@ public class EnemyBehavior : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
+
+        // Визуализация сферы рейкаста
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position + Vector3.up, sphereCastRadius); // Визуализация сферы
+        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + transform.forward * sphereCastDistance); // Визуализация направления рейкаста
     }
 
-    public void AttackPlayerAnimationEvent()
+    // Новые методы для обработки невидимости игрока
+    public void OnPlayerInvisible()
     {
-        playerStats.DecreaseMotivationForEnemy(damage);
-        audioSource.Play();
+        Debug.Log("Player is now invisible. Stopping chase and canceling attack.");
+        isPlayerInvisible = true; // Устанавливаем состояние невидимости
+        isChasing = false; // Останавливаем преследование
+        player = null; // Убираем ссылку на игрока
+        isAttacking = false; // Отменяем атаку
+        agent.isStopped = false; // Возвращаемся к патрулированию
+        MoveToNextPatrolPoint(); // Возвращаемся к патрулированию
+
+        if (animator != null)
+        {
+            animator.SetBool("IsAttacking", false); // Сбрасываем анимацию атаки
+            animator.SetBool("IsChasing", false); // Сбрасываем анимацию преследования
+        }
+    }
+
+    public void OnPlayerVisible()
+    {
+        Debug.Log("Player is now visible. Resuming chase.");
+        isPlayerInvisible = false; // Сбрасываем состояние невидимости
+        // Здесь можно добавить логику для возобновления преследования, если это необходимо
+        if (player != null && Vector3.Distance(transform.position, player.position) <= detectionRadius)
+        {
+            isChasing = true; // Возобновляем преследование
+            chaseTimer = 0f; // Сбрасываем таймер преследования
+        }
     }
 }

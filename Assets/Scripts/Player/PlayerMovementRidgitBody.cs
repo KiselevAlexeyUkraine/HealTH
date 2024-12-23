@@ -3,30 +3,29 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementRidgitBody : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f; // Скорость движения игрока
-    [SerializeField] private float sprintSpeed = 8f; // Скорость спринта
-    [SerializeField] private float jumpForce = 10f; // Сила прыжка
-    [SerializeField] private float jumpCooldown = 1f; // Время между прыжками
-    
+    [SerializeField] private float moveSpeed = 5f; 
+    [SerializeField] private float sprintSpeed = 8f; 
+    [SerializeField] private float jumpForce = 10f; 
+    [SerializeField] private float jumpCooldown = 1f; 
 
     // Звуковые эффекты
-    [SerializeField] private AudioClip runSound; // Звук бега
-    [SerializeField] private AudioClip sprintSound; // Звук спринта
-    [SerializeField] private AudioClip jumpSound; // Звук прыжка
-    [SerializeField] private AudioClip damageSound; // Звук получения урона
+    [SerializeField] private AudioClip runSound; 
+    [SerializeField] private AudioClip sprintSound; 
+    [SerializeField] private AudioClip jumpSound; 
+    [SerializeField] private AudioClip damageSound; 
 
     private Rigidbody rb;
     private InputPlayer _inputPlayer;
     private Animator _animatorPlayer;
     private AudioSource audioSource;
-    private ParticleSystem dustParticles; // Система частиц пыли
-    private PlayerStats playerStats; // Статистика игрока
-    private Camera playerCamera; // Ссылка на камеру
+    private ParticleSystem dustParticles; 
+    private PlayerStats playerStats; 
+    private Camera playerCamera; 
 
-    private float lastJumpTime; // Время последнего прыжка
-    private bool isRunningSoundPlaying = false; // Флаг для звука бега
-    private bool isSprintingSoundPlaying = false; // Флаг для звука спринта
-    private bool hasJumped = false; // Флаг для отслеживания, был ли выполнен прыжок
+    private float lastJumpTime; 
+    private bool isRunningSoundPlaying; 
+    private bool isSprintingSoundPlaying; 
+    private bool hasJumped; 
 
     private static readonly int MoveSpeedHash = Animator.StringToHash("MoveSpeed");
     private static readonly int SpringHash = Animator.StringToHash("Spring");
@@ -34,13 +33,22 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private static readonly int WaveHash = Animator.StringToHash("Wave");
     private static readonly int AttackThePlayerHash = Animator.StringToHash("AttackThePlayer");
 
-    public bool IsCamJump { get; set; } = true; // Возможность прыжка
-    public bool isMove = true; // Флаг возможности движения
-    public bool isFinishGame = false; // Флаг завершения игры
+    public bool CanJump { get; set; } = true; 
+    [SerializeField] private LayerMask _groundLayer;
+    [SerializeField] Transform _groundChecker;
+    [SerializeField] private float _groundCheckerRadius;
+    
+    public bool isMove = true; 
+    public bool isFinishGame; 
 
     private bool isWave = false;
-    private float waveTimer = 0f; // Таймер для отслеживания времени, стояния на месте
-    [SerializeField] private float waveWaitTime = 10f; // Время, через которое игрок начинает анимацию wave, если он стоит на месте
+    private float waveTimer = 0f; 
+    [SerializeField] private float waveWaitTime = 10f; 
+
+    [SerializeField] private float stationaryRecoveryAmount = 2f; 
+    [SerializeField] private float movingRecoveryAmount = 1f; 
+    [SerializeField] private float recoveryInterval = 1f; 
+    private float lastRecoveryTime; 
 
     private void Start()
     {
@@ -52,7 +60,8 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         dustParticles = GetComponentInChildren<ParticleSystem>();
         playerStats = GetComponent<PlayerStats>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        lastJumpTime = -jumpCooldown; // Чтобы игрок мог прыгнуть сразу
+        lastJumpTime = -jumpCooldown; 
+        lastRecoveryTime = Time.time; 
     }
 
     private void FixedUpdate()
@@ -64,30 +73,47 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void Update()
     {
+        CheckGround();
+        
         if (!isMove) return;
 
-        // Проверка на прыжок
         if (_inputPlayer.Jump && Time.time >= lastJumpTime + jumpCooldown)
         {
             Jump();
         }
 
-        // Если игрок не прыгает, но стоит на месте, воспроизводим звук прыжка
+        RecoverMotivation();
+        
         if (_inputPlayer.Movement.magnitude <= 0.2f && _inputPlayer.Jump)
         {
             if (hasJumped)
             {
                 PlaySound(jumpSound, false);
-                hasJumped = false; // Устанавливаем флаг, чтобы предотвратить повторное воспроизведение
-                Debug.Log("Прыгаем с места");
+                hasJumped = false;
             }
         }
         else
         {
-            hasJumped = false; // Сбрасываем флаг, если игрок не нажимает кнопку прыжка
+            hasJumped = false;
         }
 
         _animatorPlayer.SetFloat(MoveSpeedHash, _inputPlayer.Movement.magnitude);
+    }
+
+    private void RecoverMotivation()
+    {
+        if (Time.time - lastRecoveryTime >= recoveryInterval)
+        {
+            if (_inputPlayer.Movement.magnitude <= 0.2f) // Игрок стоит на месте
+            {
+                playerStats.IncreaseMotivation(stationaryRecoveryAmount);
+            }
+            else // Игрок в движении
+            {
+                playerStats.IncreaseMotivation(movingRecoveryAmount);
+            }
+            lastRecoveryTime = Time.time; // Обновляем время последнего восстановления
+        }
     }
 
     private void HandleWaveAnimation()
@@ -116,13 +142,13 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private void HandleMovement()
     {
         Vector3 movement = _inputPlayer.Movement;
-        bool isSprinting = _inputPlayer.Spriting && playerStats.Motivation > 0f;
+        bool isSprinting = _inputPlayer.Spriting && playerStats.Stamina > 0f;
 
         if (movement.magnitude > 0.2f)
         {
             MovePlayer(movement, isSprinting);
         }
-        else if (movement.magnitude < 0.2f && IsCamJump == true)
+        else if (movement.magnitude < 0.2f && CanJump == true)
         {
             StopMovementEffects();
         }
@@ -136,7 +162,7 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
         if (isSprinting)
         {
-            playerStats.DecreaseMotivation(Time.fixedDeltaTime * 10f);
+            playerStats.DecreaseStamina(Time.fixedDeltaTime * 10f);
         }
 
         // Получаем направление камеры
@@ -200,42 +226,30 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void Jump()
     {
-        if (IsCamJump)
+        if (!CanJump) return;
+        
+        _animatorPlayer.SetBool(WaveHash, false);
+        rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        CanJump = false;
+        isWave = false;
+        lastJumpTime = Time.time;
+            
+        if (!hasJumped)
         {
-            _animatorPlayer.SetBool(WaveHash, false);
-            _animatorPlayer.SetBool(JumpHash, true);
-            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-            IsCamJump = false;
-            isWave = false;
-            lastJumpTime = Time.time;
-
-            // Воспроизводим звук прыжка только если он еще не был воспроизведен
-            if (!hasJumped)
-            {
-                PlaySound(jumpSound, false);
-                hasJumped = true; // Устанавливаем флаг, чтобы предотвратить повторное воспроизведение
-            }
-            waveTimer = 0f;
+            PlaySound(jumpSound, false);
+            hasJumped = true;
         }
+        waveTimer = 0f;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void CheckGround()
     {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Car"))
-        {
-            IsCamJump = true; // Разрешить прыжок при приземлении
-            _animatorPlayer.SetBool(JumpHash, false);
-            hasJumped = false; // Сбрасываем флаг, чтобы разрешить воспроизведение звука прыжка снова
-        }
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.CompareTag("Ground") || other.gameObject.CompareTag("Car"))
-        {
-            _animatorPlayer.SetBool(JumpHash, true);
-            IsCamJump = false;
-        }
+        var isGround = Physics.CheckSphere(_groundChecker.position, _groundCheckerRadius, _groundLayer.value);
+        
+        CanJump = isGround; 
+        hasJumped = !isGround; 
+        
+        _animatorPlayer.SetBool(JumpHash, hasJumped);
     }
 
     public void FinishGame()
@@ -256,21 +270,14 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void PlaySound(AudioClip clip, bool loop)
     {
-        if (clip != null && audioSource != null)
+        if (clip == null || audioSource == null)
         {
-            audioSource.clip = clip;
-            audioSource.loop = loop;
-            audioSource.Play();
-            Debug.Log("Звук воспроизводится: " + clip.name);
+            return;
         }
-    }
-
-    private void StopSound(AudioClip clip)
-    {
-        if (audioSource.clip == clip)
-        {
-            audioSource.Stop();
-        }
+        
+        audioSource.clip = clip;
+        audioSource.loop = loop;
+        audioSource.Play();
     }
 
     private void StopAllSounds()
@@ -278,5 +285,11 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         audioSource.Stop();
         isRunningSoundPlaying = false;
         isSprintingSoundPlaying = false;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawSphere(_groundChecker.position, _groundCheckerRadius);
     }
 }

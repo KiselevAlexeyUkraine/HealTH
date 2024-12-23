@@ -1,25 +1,26 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerDash : MonoBehaviour
 {
-    public KeyCode dashKey = KeyCode.Z;
-    public float dashDistance = 4f; // Дистанция рывка
-    public float dashDuration = 0.5f; // Время рывка
-    public float dashCooldown = 1f; // Время перезарядки рывка
-    private bool canDash = true; // Флаг, указывающий, может ли персонаж сделать рывок
+    [SerializeField] private KeyCode dashKey = KeyCode.Z; // Р—Р°РјРµРЅРёС‚Рµ KeyCode.Space РЅР° РЅСѓР¶РЅСѓСЋ РІР°Рј РєРЅРѕРїРєСѓs
+    [SerializeField] private float dashDistance = 4f; // Р”РёСЃС‚Р°РЅС†РёСЏ СЂС‹РІРєР°
+    [SerializeField] private float dashDuration = 0.5f; // Р’СЂРµРјСЏ СЂС‹РІРєР°
+    [SerializeField] private float dashCooldown = 1f; // Р’СЂРµРјСЏ РїРµСЂРµР·Р°СЂСЏРґРєРё СЂС‹РІРєР°
+    private bool canDash = true; // Р¤Р»Р°Рі, СѓРєР°Р·С‹РІР°СЋС‰РёР№, РјРѕР¶РµС‚ Р»Рё РїРµСЂСЃРѕРЅР°Р¶ СЃРґРµР»Р°С‚СЊ СЂС‹РІРѕРє
+    private PlayerStats playerStats;
 
     private Rigidbody rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerStats = GetComponent<PlayerStats>();
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(dashKey) && canDash) // Замените KeyCode.Space на нужную вам кнопку
+        if (Input.GetKeyDown(dashKey) && canDash && playerStats.Helth > 0) 
         {
             StartCoroutine(Dash());
         }
@@ -27,9 +28,9 @@ public class PlayerDash : MonoBehaviour
 
     private IEnumerator Dash()
     {
-        canDash = false; // Запретить повторный рывок
+        canDash = false; // Р—Р°РїСЂРµС‚РёС‚СЊ РїРѕРІС‚РѕСЂРЅС‹Р№ СЂС‹РІРѕРє
         Vector3 startPosition = rb.position;
-        Vector3 dashDirection = transform.forward * dashDistance; // Направление рывка
+        Vector3 dashDirection = transform.forward * dashDistance; // РќР°РїСЂР°РІР»РµРЅРёРµ СЂС‹РІРєР°
         Vector3 targetPosition = startPosition + dashDirection;
 
         float elapsedTime = 0f;
@@ -38,12 +39,13 @@ public class PlayerDash : MonoBehaviour
         {
             rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (elapsedTime / dashDuration)));
             elapsedTime += Time.deltaTime;
-            yield return null; // Ждать следующего кадра
+            yield return null; // Р–РґР°С‚СЊ СЃР»РµРґСѓСЋС‰РµРіРѕ РєР°РґСЂР°
         }
 
-        rb.MovePosition(targetPosition); // Убедиться, что персонаж достиг конечной позиции
-        yield return new WaitForSeconds(dashCooldown); // Ждать время перезарядки
-        canDash = true; // Разрешить следующий рывок
+        rb.MovePosition(targetPosition); // РЈР±РµРґРёС‚СЊСЃСЏ, С‡С‚Рѕ РїРµСЂСЃРѕРЅР°Р¶ РґРѕСЃС‚РёРі РєРѕРЅРµС‡РЅРѕР№ РїРѕР·РёС†РёРё
+        playerStats.DecreaseMotivationForEnemy(1); // Р—Р°Р±РµСЂР°РµРј РѕРґРЅСѓ РµРґРёРЅРёС†Сѓ Р·РґРѕСЂРѕРІСЊСЏ Р·Р° СѓСЃРєРѕСЂРµРЅРёРµ
+        yield return new WaitForSeconds(dashCooldown); // Р–РґР°С‚СЊ РІСЂРµРјСЏ РїРµСЂРµР·Р°СЂСЏРґРєРё
+        canDash = true; // Р Р°Р·СЂРµС€РёС‚СЊ СЃР»РµРґСѓСЋС‰РёР№ СЂС‹РІРѕРє
     }
 }
    
