@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 
 public class PlayerStats : MonoBehaviour
 {
-    [FormerlySerializedAs("motivation")] [SerializeField] private float stamina = 100f; // Текущая мотивация игрока
+    [SerializeField] private float stamina = 100f; // Текущая мотивация игрока
     [SerializeField] private int health = 5; // Текущее здоровье игрока
     public int Helth => health;
     public float Stamina => stamina;

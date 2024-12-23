@@ -1,32 +1,31 @@
-using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerMovementRidgitBody : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f; // Скорость движения игрока
-    [SerializeField] private float sprintSpeed = 8f; // Скорость спринта
-    [SerializeField] private float jumpForce = 10f; // Сила прыжка
-    [SerializeField] private float jumpCooldown = 1f; // Время между прыжками
+    [SerializeField] private float moveSpeed = 5f; 
+    [SerializeField] private float sprintSpeed = 8f; 
+    [SerializeField] private float jumpForce = 10f; 
+    [SerializeField] private float jumpCooldown = 1f; 
 
     // Звуковые эффекты
-    [SerializeField] private AudioClip runSound; // Звук бега
-    [SerializeField] private AudioClip sprintSound; // Звук спринта
-    [SerializeField] private AudioClip jumpSound; // Звук прыжка
-    [SerializeField] private AudioClip damageSound; // Звук получения урона
+    [SerializeField] private AudioClip runSound; 
+    [SerializeField] private AudioClip sprintSound; 
+    [SerializeField] private AudioClip jumpSound; 
+    [SerializeField] private AudioClip damageSound; 
 
     private Rigidbody rb;
     private InputPlayer _inputPlayer;
     private Animator _animatorPlayer;
     private AudioSource audioSource;
-    private ParticleSystem dustParticles; // Система частиц пыли
-    private PlayerStats playerStats; // Статистика игрока
-    private Camera playerCamera; // Ссылка на камеру
+    private ParticleSystem dustParticles; 
+    private PlayerStats playerStats; 
+    private Camera playerCamera; 
 
-    private float lastJumpTime; // Время последнего прыжка
-    private bool isRunningSoundPlaying = false; // Флаг для звука бега
-    private bool isSprintingSoundPlaying = false; // Флаг для звука спринта
-    private bool hasJumped = false; // Флаг для отслеживания, был ли выполнен прыжок
+    private float lastJumpTime; 
+    private bool isRunningSoundPlaying; 
+    private bool isSprintingSoundPlaying; 
+    private bool hasJumped; 
 
     private static readonly int MoveSpeedHash = Animator.StringToHash("MoveSpeed");
     private static readonly int SpringHash = Animator.StringToHash("Spring");
@@ -34,23 +33,22 @@ public class PlayerMovementRidgitBody : MonoBehaviour
     private static readonly int WaveHash = Animator.StringToHash("Wave");
     private static readonly int AttackThePlayerHash = Animator.StringToHash("AttackThePlayer");
 
-    public bool CanJump { get; set; } = true; // Возможность прыжка
+    public bool CanJump { get; set; } = true; 
     [SerializeField] private LayerMask _groundLayer;
     [SerializeField] Transform _groundChecker;
     [SerializeField] private float _groundCheckerRadius;
     
-    public bool isMove = true; // Флаг возможности движения
-    public bool isFinishGame; // Флаг завершения игры
+    public bool isMove = true; 
+    public bool isFinishGame; 
 
     private bool isWave = false;
-    private float waveTimer = 0f; // Таймер для отслеживания времени, стояния на месте
-    [SerializeField] private float waveWaitTime = 10f; // Время, через которое игрок начинает анимацию wave, если он стоит на месте
+    private float waveTimer = 0f; 
+    [SerializeField] private float waveWaitTime = 10f; 
 
-    // Переменные для восстановления мотивации
-    [SerializeField] private float stationaryRecoveryAmount = 2f; // Количество восстановления мотивации при стоянии
-    [SerializeField] private float movingRecoveryAmount = 1f; // Количество восстановления мотивации при движении
-    [SerializeField] private float recoveryInterval = 1f; // Интервал времени между восстановлением мотивации
-    private float lastRecoveryTime; // Время последнего восстановления мотивации
+    [SerializeField] private float stationaryRecoveryAmount = 2f; 
+    [SerializeField] private float movingRecoveryAmount = 1f; 
+    [SerializeField] private float recoveryInterval = 1f; 
+    private float lastRecoveryTime; 
 
     private void Start()
     {
@@ -62,8 +60,8 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         dustParticles = GetComponentInChildren<ParticleSystem>();
         playerStats = GetComponent<PlayerStats>();
         rb.constraints = RigidbodyConstraints.FreezeRotation;
-        lastJumpTime = -jumpCooldown; // Чтобы игрок мог прыгнуть сразу
-        lastRecoveryTime = Time.time; // Инициализация времени последнего восстановления
+        lastJumpTime = -jumpCooldown; 
+        lastRecoveryTime = Time.time; 
     }
 
     private void FixedUpdate()
@@ -79,28 +77,24 @@ public class PlayerMovementRidgitBody : MonoBehaviour
         
         if (!isMove) return;
 
-        // Проверка на прыжок
         if (_inputPlayer.Jump && Time.time >= lastJumpTime + jumpCooldown)
         {
             Jump();
         }
 
-        // Восстановление мотивации
         RecoverMotivation();
-
-        // Если игрок не прыгает, но стоит на месте, воспроизводим звук прыжка
+        
         if (_inputPlayer.Movement.magnitude <= 0.2f && _inputPlayer.Jump)
         {
             if (hasJumped)
             {
                 PlaySound(jumpSound, false);
-                hasJumped = false; // Устанавливаем флаг, чтобы предотвратить повторное воспроизведение
-                Debug.Log("Прыгаем с места");
+                hasJumped = false;
             }
         }
         else
         {
-            hasJumped = false; // Сбрасываем флаг, если игрок не нажимает кнопку прыжка
+            hasJumped = false;
         }
 
         _animatorPlayer.SetFloat(MoveSpeedHash, _inputPlayer.Movement.magnitude);
@@ -276,12 +270,14 @@ public class PlayerMovementRidgitBody : MonoBehaviour
 
     private void PlaySound(AudioClip clip, bool loop)
     {
-        if (clip != null && audioSource != null)
+        if (clip == null || audioSource == null)
         {
-            audioSource.clip = clip;
-            audioSource.loop = loop;
-            audioSource.Play();
+            return;
         }
+        
+        audioSource.clip = clip;
+        audioSource.loop = loop;
+        audioSource.Play();
     }
 
     private void StopAllSounds()

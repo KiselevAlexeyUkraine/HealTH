@@ -2,20 +2,15 @@ using UnityEngine;
 
 public class Menu : MonoBehaviour
 {
-    // Имя меню, которое можно установить в инспекторе Unity
     public MenuNames menuName;
 
-    // Метод для открытия меню
-    public void Open()
+    public virtual void Open()
     {
-        // Активируем объект меню, чтобы он стал видимым
         gameObject.SetActive(true);
     }
 
-    // Метод для закрытия меню
-    public void Close()
+    public virtual void Close()
     {
-        // Деактивируем объект меню, чтобы он стал невидимым
         gameObject.SetActive(false);
     }
 }

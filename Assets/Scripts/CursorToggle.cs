@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class CursorToggle : MonoBehaviour
 {
-
-    [SerializeField] private GameObject UiStatsPlayer;
+    [SerializeField]
+    private GameObject uiStatsPlayer;
+    [SerializeField] 
+    private GameObject _character;
 
     private PlayerMovementRidgitBody playerMovementRidgitBody;
-    private PlayerStats playerStats;
+    private PlayerStats _playerStats;
     private bool isCursorVisible;
     
     private void Start()
@@ -14,8 +16,9 @@ public class CursorToggle : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         MenuSwitcher.instance.OpenMenu(MenuNames.None);
         TimeManager.instance.ContinionGame();
-        playerStats = GetComponent<PlayerStats>();
-        playerMovementRidgitBody = GetComponent<PlayerMovementRidgitBody>();
+
+        _playerStats = _character.GetComponent<PlayerStats>();
+        playerMovementRidgitBody = _character.GetComponent<PlayerMovementRidgitBody>();
         CurrentSceneForStats();
     }
 
@@ -32,11 +35,11 @@ public class CursorToggle : MonoBehaviour
     {
         if (SceneSwitcher.instance.CurrentScene == 0)
         {
-            UiStatsPlayer.SetActive(false);
+            uiStatsPlayer.SetActive(false);
         }
         else
         {
-            UiStatsPlayer.SetActive(true);
+            uiStatsPlayer.SetActive(true);
         }
     }
 
@@ -56,7 +59,7 @@ public class CursorToggle : MonoBehaviour
         else
         {
             Cursor.lockState = CursorLockMode.Locked; // Блокируем курсор в центре экрана
-            if (playerStats.IsDeath == false)
+            if (_playerStats.IsDeath == false)
             {
                 TimeManager.instance.ContinionGame(); // Продолжаем игру
             }
@@ -73,14 +76,13 @@ public class CursorToggle : MonoBehaviour
         }
         else if (SceneSwitcher.instance.CurrentScene > 0)
         {
-            if (playerStats.IsDeath)
+            if (_playerStats.IsDeath)
             {
                 MenuSwitcher.instance.OpenMenu(MenuNames.FailedGame);
             }
             else
             {
                 MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGame);
-                
             }
             
             if (playerMovementRidgitBody.isMove == false)
@@ -100,11 +102,11 @@ public class CursorToggle : MonoBehaviour
             return;
         }
         
-        if (playerStats.IsDeath == false && playerMovementRidgitBody.isFinishGame == false)
+        if (_playerStats.IsDeath == false && playerMovementRidgitBody.isFinishGame == false)
         {
             MenuSwitcher.instance.OpenMenu(MenuNames.ContinuationGame);
         }
-        else if (playerStats.IsDeath)
+        else if (_playerStats.IsDeath)
         {
             MenuSwitcher.instance.OpenMenu(MenuNames.FailedGame);
         }
