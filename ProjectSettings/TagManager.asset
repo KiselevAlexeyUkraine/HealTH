@@ -8,8 +8,8 @@ TagManager:
   - Bright
   - Coin
   - Car
-  - Dollars
   - CameraIgnore
+  - Keys
   layers:
   - Default
   - TransparentFX

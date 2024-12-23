@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class CoinCollector : MonoBehaviour
 {
-    [SerializeField] private PlayerStats playerStats;
+    PlayerStats playerStats;
 
+    void Start()
+    {
+        playerStats = GetComponent<PlayerStats>();
+    }
 
     void OnTriggerEnter(Collider other)
     {
@@ -13,9 +17,9 @@ public class CoinCollector : MonoBehaviour
             playerStats.AddScore((int)ScoreValutes.scoreCoins);
             Destroy(other.gameObject); // Уничтожаем
         }
-        if (other.CompareTag("Dollars"))
+        if (other.CompareTag("Keys"))
         {
-            playerStats.AddScore((int)ScoreValutes.scoreDollars);
+            playerStats.AddScore((int)ScoreValutes.scoreKeys);
             Destroy(other.gameObject); // Уничтожаем
         }
 
@@ -24,8 +28,5 @@ public class CoinCollector : MonoBehaviour
             playerStats.AddScore((int)ScoreValutes.scoreMotivations);
             Destroy(other.gameObject); // Уничтожаем
         }
-
     }
-
-
 }
