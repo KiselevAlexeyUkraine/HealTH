@@ -11,10 +11,6 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float attackRadius = 1.5f; // Радиус атаки
     private int damage = 1;
     [SerializeField] private float detectionRadius = 8f; // Радиус обнаружения игрока
-    [SerializeField] private float sphereCastRadius = 0.5f; // Радиус сферы для рейкаста
-    [SerializeField] private float sphereCastDistance = 10f; // Длина рейкаста
-    [SerializeField] private float playerHeightThreshold = 1f; // Пороговое значение по Y для отмены преследования
-    [SerializeField] private float timeAboveThreshold = 5f; // Время, в течение которого игрок должен оставаться выше порога
 
     [SerializeField] private AudioClip patrolClip; // Звук для патрулирования
     [SerializeField] private AudioClip chaseClip; // Звук для преследования
@@ -32,8 +28,7 @@ public class EnemyBehavior : MonoBehaviour
     private bool isWaiting;
 
     // Новые переменные для отслеживания времени
-    private float timeAboveThresholdCounter = 0f; // Таймер для отслеживания времени выше порога
-    private float chaseDuration = 5f; // Время преследования (изменено на 5 секунд)
+    [SerializeField] private float chaseDuration = 5f; // Время преследования
     private float chaseTimer = 0f; // Таймер для отслеживания времени преследования
 
     // Переменная для отслеживания состояния невидимости игрока
@@ -41,7 +36,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
-        playerStats = GameObject.Find("Player").GetComponent<PlayerStats>();
+        playerStats = GameObject.Find("Character").GetComponent<PlayerStats>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -69,45 +64,6 @@ public class EnemyBehavior : MonoBehaviour
         // Проверяем расстояние до игрока
         float distanceToPlayer = player != null ? Vector3.Distance(transform.position, player.position) : Mathf.Infinity;
 
-        // Проверяем расстояние с помощью SphereCast
-        RaycastHit hit;
-        Vector3 sphereCastOrigin = transform.position + Vector3.up; // Начальная точка рейкаста
-        bool playerDetected = Physics.SphereCast(sphereCastOrigin, sphereCastRadius, transform.forward, out hit, sphereCastDistance);
-
-        if (playerDetected && hit.collider.CompareTag("Player"))
-        {
-            player = hit.collider.transform;
-            // Проверяем, видим ли игрок
-            if (!isPlayerInvisible && !isChasing && !isReturningToPatrol)
-            {
-                isChasing = true; // Начинаем преследование
-                chaseTimer = 0f; // Сбрасываем таймер преследования
-            }
-        }
-
-        // Проверяем, находится ли игрок выше порогового значения по Y
-        if (player != null)
-        {
-            if (player.position.y > playerHeightThreshold)
-            {
-                // Увеличиваем таймер, если игрок выше порога
-                timeAboveThresholdCounter += Time.deltaTime;
-
-                // Проверяем, превышает ли таймер заданное время
-                if (timeAboveThresholdCounter >= timeAboveThreshold)
-                {
-                    isChasing = false; // Отменяем преследование
-                    MoveToNextPatrolPoint(); // Возвращаемся к патрулированию
-                    return; // Выходим из метода
-                }
-            }
-            else
-            {
-                // Сбрасываем таймер, если игрок ниже порога
-                timeAboveThresholdCounter = 0f;
-            }
-        }
-
         if (isChasing)
         {
             chaseTimer += Time.deltaTime; // Увеличиваем таймер преследования
@@ -116,12 +72,8 @@ public class EnemyBehavior : MonoBehaviour
             {
                 isChasing = false; // Останавливаем преследование
                 isReturningToPatrol = true; // Устанавливаем состояние возвращения к патрулированию
-                agent.isStopped = false; // Убедимся, что агент не остановлен
-                if (audioSource != null && chaseClip != null)
-                {
-                    audioSource.Stop(); // Останавливаем звук преследования
-                }
-                MoveToNextPatrolPoint(); // Возвращаемся к патрулированию
+                agent.isStopped = true; // Останавливаем агента
+                Debug.Log("Не Бежим");
                 return; // Выходим из метода
             }
 
@@ -280,10 +232,6 @@ public class EnemyBehavior : MonoBehaviour
         if (playerStats != null)
         {
             playerStats.DecreaseMotivationForEnemy(damage); // Уменьшаем здоровье игрока
-        }
-
-        if (audioSource != null && attackClip != null)
-        {
             audioSource.Play(); // Включаем звук атаки
         }
     }
@@ -337,11 +285,6 @@ public class EnemyBehavior : MonoBehaviour
 
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
-
-        // Визуализация сферы рейкаста
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position + Vector3.up, sphereCastRadius); // Визуализация сферы
-        Gizmos.DrawLine(transform.position + Vector3.up, transform.position + Vector3.up + transform.forward * sphereCastDistance); // Визуализация направления рейкаста
     }
 
     // Новые методы для обработки невидимости игрока
