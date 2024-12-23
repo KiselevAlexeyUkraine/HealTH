@@ -16,11 +16,12 @@ public class PlayerDash : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerStats = GetComponent<PlayerStats>();
+        Debug.Log("Чему равен наш ключ " + dashKey.ToString());
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(dashKey) && canDash && playerStats.Helth > 0)
+        if (Input.GetKeyDown(dashKey) && canDash && playerStats.Helth > 1)
         {
             StartCoroutine(Dash());
         }
@@ -57,7 +58,7 @@ public class PlayerDash : MonoBehaviour
         canDash = true; // Разрешить следующий рывок
     }
 
-    private bool IsPathClear(Vector3 start, Vector3 target)
+    bool IsPathClear(Vector3 start, Vector3 target)
     {
         // Проверка на наличие препятствий между начальной и целевой позицией
         RaycastHit hit;
