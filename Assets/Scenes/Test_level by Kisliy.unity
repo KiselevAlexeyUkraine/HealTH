@@ -10895,34 +10895,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2346229345655872033, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 4648642628595359824, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 4837037763415079874, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10.32
-      objectReference: {fileID: 0}
     - target: {fileID: 6374856145485733058, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
         type: 3}
       propertyPath: m_Name
       value: PeacefulNPC
       objectReference: {fileID: 0}
-    - target: {fileID: 6967835240385359325, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000,
-        type: 0}
     - target: {fileID: 7792452921019306946, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10973,12 +10950,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8638163523076889722, guid: 5fd91f4f41ad1ed41b30c4f07ddcb1ee,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 3936346786652291628, guid: 0000000000000000d000000000000000,
-        type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -20425,32 +20396,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2264520792138924064, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000,
-        type: 0}
     - target: {fileID: 3161579354588114149, guid: 6cee84178b4440d4e97eaeeb5f207131,
         type: 3}
       propertyPath: m_Name
       value: EnemyMoveForPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 7014353454787654672, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000,
-        type: 0}
-    - target: {fileID: 7105348326847864106, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 7105348326847864106, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 8.08
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
