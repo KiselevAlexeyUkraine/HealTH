@@ -409,6 +409,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1132037675771743385, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: field of view
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132037675771743385, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: near clip plane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304744164819339630, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1304744164819339630, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 1871390428265299106, guid: 92a3d829549deda439d7885b67c65fb5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -539,6 +559,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Cameras
       objectReference: {fileID: 0}
+    - target: {fileID: 3406967139872552424, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4583337427079342434, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 5799048533733615083, guid: 92a3d829549deda439d7885b67c65fb5,
         type: 3}
       propertyPath: _transitions.Array.size
@@ -574,6 +604,16 @@ PrefabInstance:
       propertyPath: _transitions.Array.data[4].animation
       value: Start
       objectReference: {fileID: 0}
+    - target: {fileID: 6681500066477531161, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141693934588822659, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 7627236033931835382, guid: 92a3d829549deda439d7885b67c65fb5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -608,6 +648,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0.07804244
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184257887685961278, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.FieldOfView
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 9184257887685961278, guid: 92a3d829549deda439d7885b67c65fb5,
+        type: 3}
+      propertyPath: m_Lens.NearClipPlane
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -23,32 +23,33 @@ namespace UI.Menu
             _group.alpha = 0f;
         }
         
-        public void Open()
+        public async void Open()
         {
             OnOpen?.Invoke();
             gameObject.SetActive(true);
-            Fade(0f, 1f, 0.2f, Opened).Forget();
+            await Fade(0f, 1f, 0.2f);
+            Opened?.Invoke();
         }
 
-        public void Close()
+        public async void Close()
         {
             OnClose?.Invoke();
-            Fade(1f, 0f, 0.2f, Closed).Forget();
+            await Fade(1f, 0f, 0.2f);
             gameObject.SetActive(false);
+            Closed?.Invoke();
         }
 
-        private async UniTask Fade(float start, float end, float duration, Action callback)
+        private async UniTask Fade(float start, float end, float duration)
         {
             var elapsed = 0f;
         
-            while (elapsed < duration)
+            while (elapsed <= duration)
             {
                 elapsed += Time.deltaTime;
                 _group.alpha = Mathf.Lerp(start, end, elapsed / duration);
+                Debug.Log($"{elapsed / duration}");
                 await UniTask.Yield();
             }
-            
-            callback?.Invoke();
         }
     }
 }

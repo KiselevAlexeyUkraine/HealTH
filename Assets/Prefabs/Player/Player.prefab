@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 3119614711271656574}
   - component: {fileID: 1255060440227649288}
   - component: {fileID: 7789792053269498520}
-  - component: {fileID: 8543836663871985056}
   - component: {fileID: 1981246083036363594}
   - component: {fileID: 595840258382536991}
   - component: {fileID: 3616934191344540956}
@@ -78,14 +77,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32b0f9fb8af62049a13fecfe129016a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  sprintSpeed: 7
-  jumpForce: 6
-  jumpCooldown: 1.3
-  runSound: {fileID: 8300000, guid: 2d3eb6d6196c5b64081f98e25ab92f58, type: 3}
-  sprintSound: {fileID: 8300000, guid: 8aebba18e3b6f6d4284db0c173e923c4, type: 3}
-  jumpSound: {fileID: 8300000, guid: c50ee7d78d3821a4bad37451fac9223c, type: 3}
-  damageSound: {fileID: 8300000, guid: ed52cca5993ec244ca29364a986d31be, type: 3}
+  _moveSpeed: 5
+  _sprintSpeed: 8
+  _jumpForce: 10
+  _jumpCooldown: 1
+  _runSound: {fileID: 8300000, guid: 2d3eb6d6196c5b64081f98e25ab92f58, type: 3}
+  _sprintSound: {fileID: 8300000, guid: 8aebba18e3b6f6d4284db0c173e923c4, type: 3}
+  _jumpSound: {fileID: 8300000, guid: c50ee7d78d3821a4bad37451fac9223c, type: 3}
+  _damageSound: {fileID: 8300000, guid: afddfd488d6f379498c310f76214a9c8, type: 3}
   _groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -97,18 +96,6 @@ MonoBehaviour:
   stationaryRecoveryAmount: 3
   movingRecoveryAmount: 2
   recoveryInterval: 1
---- !u!114 &8543836663871985056
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 56189365799834930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea630e1d37d354347a39f2f1bc4f544a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!54 &1981246083036363594
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -196,7 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68cf81148f4d0424fbab7b878a72ea9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerStats: {fileID: 3616934191344540956}
+  _playerStats: {fileID: 3616934191344540956}
 --- !u!82 &4242839551122785514
 AudioSource:
   m_ObjectHideFlags: 0
@@ -206,7 +193,8 @@ AudioSource:
   m_GameObject: {fileID: 56189365799834930}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1164459814729798918, guid: 1ddf83521096f4f4c861875c03c72680,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -1775,7 +1763,7 @@ Transform:
   m_GameObject: {fileID: 4216662736246041348}
   serializedVersion: 2
   m_LocalRotation: {x: 0.39496458, y: 0, z: 0, w: 0.9186964}
-  m_LocalPosition: {x: 0, y: 3.1874995, z: -3.2589285}
+  m_LocalPosition: {x: 0, y: 3.1875, z: -3.2589285}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
