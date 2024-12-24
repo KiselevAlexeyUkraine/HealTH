@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -11,7 +12,7 @@ public class PlayerStats : MonoBehaviour
     public float Stamina => stamina;
     [SerializeField] private TMP_Text scoreTextCoins; // TextMeshPro-текст для отображения очков монет
     [SerializeField] private Image staminaFill; // Изображение для отображения мотивации
-    private PlayerMovementRidgitBody playerMovementRidgitBody;
+    private Player.PlayerMovement _playerMovement;
     private CursorToggle cursorToggle;
 
     [SerializeField] private GameObject[] imagesHealth; // Изображения здоровья
@@ -33,7 +34,7 @@ public class PlayerStats : MonoBehaviour
 
     private void Start()
     {
-        playerMovementRidgitBody = GetComponent<PlayerMovementRidgitBody>();
+        _playerMovement = GetComponent<Player.PlayerMovement>();
         cursorToggle = GetComponent<CursorToggle>();
         audioSource = GetComponent<AudioSource>();
 
@@ -45,16 +46,14 @@ public class PlayerStats : MonoBehaviour
 
     private void Update()
     {
-        // Увеличиваем время игры на время, прошедшее с последнего кадра
-        playTime += TimeManager.instance.TimeDeltaTime;
+        playTime += Time.deltaTime;
     }
-
-    // Метод для получения времени в формате "минуты:секунды.десятые"
+    
     public string GetFormattedPlayTime()
     {
-        int minutes = Mathf.FloorToInt(playTime / 60);
-        float seconds = playTime % 60;
-        return string.Format("{0}:{1:00.0}", minutes, seconds);
+        var minutes = Mathf.FloorToInt(playTime / 60);
+        var seconds = playTime % 60;
+        return $"{minutes}:{seconds:00.0}";
     }
 
     public void AddScore(int score)
@@ -140,7 +139,7 @@ public class PlayerStats : MonoBehaviour
                 imagesHealth[health].SetActive(false);
             }
 
-            playerMovementRidgitBody.TakeDamage();
+            _playerMovement.TakeDamage();
         }
 
         // Если мотивация падает до 0, можно добавить логику поражения

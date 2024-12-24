@@ -60,7 +60,7 @@ public class SceneSwitcher : MonoBehaviour
     public void RestartCurrentScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        TimeManager.instance.ContinionGame();
+        PauseManager.instance.Play();
         SceneManager.LoadScene(currentSceneIndex);
     }
 
