@@ -27,7 +27,7 @@ namespace UI.Menu
         {
             OnOpen?.Invoke();
             gameObject.SetActive(true);
-            Fade(0f, 1f, 1f, Opened).Forget();
+            Fade(0f, 1f, 0.2f, Opened).Forget();
         }
 
         public void Close()
