@@ -5,6 +5,7 @@ public class DoorController : MonoBehaviour
     [SerializeField] private Animator doorAnimator; // Аниматор двери
     [SerializeField] private int requiredKeys = 1; // Количество ключей, необходимых для открытия двери
     private PlayerStats playerStats; // Ссылка на скрипт PlayerStats
+    private bool IsOpen = true;
 
     private void Start()
     {
@@ -14,16 +15,19 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (IsOpen == true)
         {
-            // Проверяем, есть ли у игрока достаточно ключей
-            if (playerStats.ScoreKeys >= requiredKeys)
+            if (other.CompareTag("Player"))
             {
-                OpenDoor();
-            }
-            else
-            {
-                Debug.Log("У вас недостаточно ключей для открытия двери.");
+                // Проверяем, есть ли у игрока достаточно ключей
+                if (playerStats.ScoreKeys >= requiredKeys)
+                {
+                    OpenDoor();
+                }
+                else
+                {
+                    Debug.Log("У вас недостаточно ключей для открытия двери.");
+                }
             }
         }
     }
@@ -38,5 +42,6 @@ public class DoorController : MonoBehaviour
 
         // Уменьшаем количество ключей у игрока
         playerStats.MinusKeys(); // Уменьшаем количество ключей
+        IsOpen = false;
     }
 }
