@@ -9045,6 +9045,18 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 10.000001, y: 4.000001, z: 7.5}
   m_Center: {x: 0, y: 0.0000076293945, z: 3.75}
+--- !u!114 &533976084 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1701854024452705098, guid: 00bd7ecc102b6d541bef0fe621048fd2,
+    type: 3}
+  m_PrefabInstance: {fileID: 1994095123}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 42c1b762683a5b341b4e87fa8b3479a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &540183575
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10061,6 +10073,11 @@ PrefabInstance:
       objectReference: {fileID: 928916944}
     - target: {fileID: 3616934191344540956, guid: ee69d1a37854544449422987af8c7ada,
         type: 3}
+      propertyPath: cursorToggle
+      value: 
+      objectReference: {fileID: 533976084}
+    - target: {fileID: 3616934191344540956, guid: ee69d1a37854544449422987af8c7ada,
+        type: 3}
       propertyPath: scoreTextCoins
       value: 
       objectReference: {fileID: 1919674852}
@@ -10217,12 +10234,12 @@ PrefabInstance:
     - target: {fileID: 8312480373075028872, guid: ee69d1a37854544449422987af8c7ada,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.6209237
+      value: -0.62092376
       objectReference: {fileID: 0}
     - target: {fileID: 8312480373075028872, guid: ee69d1a37854544449422987af8c7ada,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.0011104948
+      value: 0.0011104947
       objectReference: {fileID: 0}
     - target: {fileID: 8312480373075028872, guid: ee69d1a37854544449422987af8c7ada,
         type: 3}

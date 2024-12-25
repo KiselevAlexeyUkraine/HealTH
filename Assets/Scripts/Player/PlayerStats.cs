@@ -12,7 +12,7 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private TMP_Text scoreTextCoins; // TextMeshPro-текст для отображения очков монет
     [SerializeField] private Image staminaFill; // Изображение для отображения мотивации
     private PlayerMovementRidgitBody playerMovementRidgitBody;
-    private CursorToggle cursorToggle;
+    [SerializeField] private CursorToggle cursorToggle;
 
     [SerializeField] private GameObject[] imagesHealth; // Изображения здоровья
     [SerializeField] private AudioClip coinPickupSound; // Звук подбора монеты
@@ -34,7 +34,6 @@ public class PlayerStats : MonoBehaviour
     private void Start()
     {
         playerMovementRidgitBody = GetComponent<PlayerMovementRidgitBody>();
-        cursorToggle = GetComponent<CursorToggle>();
         audioSource = GetComponent<AudioSource>();
 
         foreach (var image in imagesHealth)
