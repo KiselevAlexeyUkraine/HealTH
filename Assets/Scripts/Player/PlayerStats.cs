@@ -10,18 +10,19 @@ public class PlayerStats : MonoBehaviour
     public int Helth => health;
     public float Stamina => stamina;
     [SerializeField] private TMP_Text scoreTextCoins; // TextMeshPro-текст для отображения очков монет
+    [SerializeField] private TMP_Text scoreTextKeys; // TextMeshPro-текст для отображения очков монет
     [SerializeField] private Image staminaFill; // Изображение для отображения мотивации
     private PlayerMovementRidgitBody playerMovementRidgitBody;
     [SerializeField] private CursorToggle cursorToggle;
 
     [SerializeField] private GameObject[] imagesHealth; // Изображения здоровья
     [SerializeField] private AudioClip coinPickupSound; // Звук подбора монеты
-    [SerializeField] private AudioClip dollarPickupSound; // Звук подбора доллара
+    [SerializeField] private AudioClip keysPickupSound; // Звук подбора доллара
     [SerializeField] private AudioClip brightPickupSound; // Звук подбора яркости
     private AudioSource audioSource; // Источник звука
 
-    private int scoreDollars = 0; // Текущие очки долларов
-    public float ScoreDollars { get => scoreDollars; }
+    private int scoreKeys = 0; // Текущие очки долларов
+    public float ScoreKeys { get => scoreKeys; }
     private int scoreCoins = 0; // Текущие очки монет
     public float ScoreCoins { get => scoreCoins; }
 
@@ -63,10 +64,10 @@ public class PlayerStats : MonoBehaviour
             scoreCoins++;
             PlaySound(coinPickupSound); // Воспроизводим звук подбора монеты
         }
-        else if (score == (int)ScoreValutes.scoreDollars)
+        else if (score == (int)ScoreValutes.scoreKey)
         {
-            scoreDollars++;
-            PlaySound(dollarPickupSound); // Воспроизводим звук подбора доллара
+            scoreKeys++;
+            PlaySound(keysPickupSound); // Воспроизводим звук подбора доллара
         }
         else if (score == (int)ScoreValutes.scoreMotivations)
         {
@@ -97,6 +98,7 @@ public class PlayerStats : MonoBehaviour
     private void UpdateScoreText()
     {
         scoreTextCoins.text = "Score coins: " + scoreCoins;
+        scoreTextKeys.text = "Score Keys: " + scoreKeys;
     }
 
     private void UpdateScoreMotivation()
@@ -160,6 +162,6 @@ public class PlayerStats : MonoBehaviour
 public enum ScoreValutes
 {
     scoreCoins,
-    scoreDollars,
+    scoreKey,
     scoreMotivations
 }

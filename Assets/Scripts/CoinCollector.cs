@@ -13,9 +13,9 @@ public class CoinCollector : MonoBehaviour
             playerStats.AddScore((int)ScoreValutes.scoreCoins);
             Destroy(other.gameObject); // Уничтожаем
         }
-        if (other.CompareTag("Dollars"))
+        if (other.CompareTag("Key"))
         {
-            playerStats.AddScore((int)ScoreValutes.scoreDollars);
+            playerStats.AddScore((int)ScoreValutes.scoreKey);
             Destroy(other.gameObject); // Уничтожаем
         }
 
