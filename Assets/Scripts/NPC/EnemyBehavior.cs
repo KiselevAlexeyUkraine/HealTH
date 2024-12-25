@@ -243,6 +243,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             Debug.Log("Player detected - attack!");
             player = other.transform;
+
             // Проверяем, видим ли игрок
             if (!isPlayerInvisible && !isChasing && !isReturningToPatrol)
             {
