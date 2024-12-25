@@ -203,7 +203,7 @@ public class EnemyBehavior : MonoBehaviour
     private void AttackPlayer()
     {
         isAttacking = true;
-        agent.isStopped = true;
+        agent.isStopped = true; // Останавливаем агента во время атаки
 
         if (player != null)
         {
