@@ -16,7 +16,6 @@ public class PlayerDash : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerStats = GetComponent<PlayerStats>();
-        Debug.Log("Чему равен наш ключ " + dashKey.ToString());
     }
 
     void Update()

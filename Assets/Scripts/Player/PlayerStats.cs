@@ -78,6 +78,13 @@ public class PlayerStats : MonoBehaviour
         UpdateScoreMotivation();
     }
 
+    public void MinusKeys()
+    {
+        scoreKeys--;
+        PlaySound(keysPickupSound); // Воспроизводим звук подбора доллара
+        UpdateScoreText();
+    }
+
     private void IncreaseHealth()
     {
         if (health < imagesHealth.Length) // Проверяем, что здоровье не превышает максимальное количество изображений
