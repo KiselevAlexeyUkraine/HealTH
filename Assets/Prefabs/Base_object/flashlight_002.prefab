@@ -191,6 +191,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: flashlight_002
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b51babca269db34ebed2f0ff6477208,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -198,8 +203,39 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8962625252135249345}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b51babca269db34ebed2f0ff6477208,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8722437312963925134}
   m_SourcePrefab: {fileID: 100100000, guid: 1b51babca269db34ebed2f0ff6477208, type: 3}
+--- !u!1 &3726862571070594811 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 1b51babca269db34ebed2f0ff6477208,
+    type: 3}
+  m_PrefabInstance: {fileID: 4573704569813574570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &8722437312963925134
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3726862571070594811}
+  m_Material: {fileID: 13400000, guid: 506d0356715bb1443a679ca96edd80be, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.39052054, y: 0.3905205, z: 2.4285412}
+  m_Center: {x: 0, y: 0.00000030547378, z: 1.2142706}
 --- !u!4 &4103809982387766337 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,

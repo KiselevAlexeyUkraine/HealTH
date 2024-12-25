@@ -90,7 +90,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f3676e2aeae5b44e9fe6109072d8432,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.66
+      value: 16.27
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f3676e2aeae5b44e9fe6109072d8432,
         type: 3}
@@ -100,7 +100,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 0f3676e2aeae5b44e9fe6109072d8432,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -86.45
+      value: -85.92
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 0f3676e2aeae5b44e9fe6109072d8432,
         type: 3}
@@ -155,7 +155,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 0f3676e2aeae5b44e9fe6109072d8432,
         type: 3}
       propertyPath: m_TagString
-      value: Ground
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -189,7 +189,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2216608423412774868}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 506d0356715bb1443a679ca96edd80be, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
