@@ -77,6 +77,7 @@ public class EnemyBehavior : MonoBehaviour
                 return; // Выходим из метода
             }
 
+            // Если игрок в радиусе атаки, атакуем
             if (distanceToPlayer <= attackRadius)
             {
                 AttackPlayer();
