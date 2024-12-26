@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -231,7 +232,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (playerStats != null)
         {
-            playerStats.DecreaseMotivationForEnemy(damage); // Уменьшаем здоровье игрока
+            //playerStats.DecreaseMotivationForEnemy(damage); // Уменьшаем здоровье игрока
             audioSource.Play(); // Включаем звук атаки
         }
     }

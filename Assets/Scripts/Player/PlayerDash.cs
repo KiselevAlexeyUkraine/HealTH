@@ -1,75 +1,54 @@
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Player
 {
     public class PlayerDash : MonoBehaviour
     {
-        [SerializeField] KeyCode dashKey = KeyCode.Z; // Замените KeyCode.Space на нужную вам кнопку
-        [SerializeField] float dashDistance = 4f; // Дистанция рывка
-        [SerializeField] float dashDuration = 0.5f; // Время рывка
-        [SerializeField] float dashCooldown = 1f; // Время перезарядки рывка
-        bool canDash = true; // Флаг, указывающий, может ли персонаж сделать рывок
+        [SerializeField]
+        private PlayerMovement _movement;
+        [SerializeField] 
+        private float _dashDistance = 4f; 
+        [SerializeField] 
+        private float _dashDuration = 0.5f; 
+        [SerializeField] 
+        private float _dashCooldown = 1f; 
 
-        PlayerStats playerStats;
-        Rigidbody rb;
+        private bool _canDash = true;
+        private float _elapsedTime;
 
-        void Start()
+        private void Update()
         {
-            rb = GetComponent<Rigidbody>();
-            playerStats = GetComponent<PlayerStats>();
-            Debug.Log("Чему равен наш ключ " + dashKey);
-        }
-
-        void Update()
-        {
-            if (Input.GetKeyDown(dashKey) && canDash && playerStats.Helth > 1)
+            if (InputPlayer.Dash && _canDash)
             {
-                StartCoroutine(Dash());
+                Dash().Forget();
             }
         }
 
-        IEnumerator Dash()
+        private async UniTaskVoid Dash()
         {
-            canDash = false; // Запретить повторный рывок
-            Vector3 startPosition = rb.position;
-            Vector3 dashDirection = transform.forward * dashDistance; // Направление рывка
-            Vector3 targetPosition = startPosition + dashDirection;
-
-            // Проверка на столкновение с препятствиями
-            if (IsPathClear(startPosition, targetPosition))
+            _canDash = false;
+            _elapsedTime = 0f;
+            
+            var forward = _movement.transform.forward;
+            var startPosition = _movement.transform.position;
+            var endPosition = startPosition + forward * _dashDistance;
+            
+            while (_elapsedTime < _dashDuration)
             {
-                float elapsedTime = 0f;
+                _elapsedTime += Time.deltaTime;
+                
+                var position = Vector3.Lerp(startPosition, endPosition, _elapsedTime / _dashDuration);
+                var direction = position - _movement.transform.position;
+                
+                _movement.MoveForward(direction);
 
-                while (elapsedTime < dashDuration)
-                {
-                    rb.MovePosition(Vector3.Lerp(startPosition, targetPosition, (elapsedTime / dashDuration)));
-                    elapsedTime += Time.deltaTime;
-                    yield return null; // Ждать следующего кадра
-                }
-
-                rb.MovePosition(targetPosition); // Убедиться, что персонаж достиг конечной позиции
-                playerStats.DecreaseMotivationForEnemy(1); // Забираем одну единицу здоровья за ускорение
-            }
-            else
-            {
-                Debug.Log("Dash blocked by an obstacle!");
+                await UniTask.NextFrame();
             }
 
-            yield return new WaitForSeconds(dashCooldown); // Ждать время перезарядки
-            canDash = true; // Разрешить следующий рывок
-        }
-
-        bool IsPathClear(Vector3 start, Vector3 target)
-        {
-            // Проверка на наличие препятствий между начальной и целевой позицией
-            RaycastHit hit;
-            if (Physics.Linecast(start, target, out hit))
-            {
-                // Если есть столкновение, возвращаем false
-                return false;
-            }
-            return true; // Путь свободен
+            await UniTask.WaitForSeconds(_dashCooldown);
+            
+            _canDash = true;
         }
     }
 }

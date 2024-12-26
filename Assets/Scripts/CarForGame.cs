@@ -77,34 +77,7 @@ public class CarForGame : MonoBehaviour
             isWaiting = true;
         }
     }
-
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        // Проверяем, столкнулась ли машина с игроком
-        if (collision.gameObject.CompareTag("Player") && navMeshAgent.velocity.magnitude > 0)
-        {
-            // Проверяем, прошло ли достаточно времени с последнего удара
-            if (Time.time - lastDamageTime >= damageInterval)
-            {
-                DealDamageToPlayer(collision.collider);
-                lastDamageTime = Time.time; // Обновляем время последнего удара
-            }
-        }
-    }
-
-
-    private void DealDamageToPlayer(Collider playerCollider)
-    {
-        PlayerStats playerStats = playerCollider.GetComponent<PlayerStats>();
-
-        if (playerStats != null)
-        {
-            // Уменьшаем мотивацию игрока
-            playerStats.DecreaseMotivationForEnemy(motivationLoss);
-        }
-    }
-
+    
     private void UpdateAnimationAndSound()
     {
         // Проверяем, движется ли машина
