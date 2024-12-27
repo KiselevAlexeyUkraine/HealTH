@@ -13,7 +13,7 @@ namespace UI.Game
         private void Awake()
         {
             _restart.onClick.AddListener(() => { SceneSwitcher.instance.LoadScene(SceneSwitcher.instance.CurrentScene); });
-            _menu.onClick.AddListener(() => { PageSwitcher.Open(PageName.Menu);});
+            _menu.onClick.AddListener(() => { PageSwitcher.Open(PageName.Menu); });
         }
 
         private void OnDestroy()

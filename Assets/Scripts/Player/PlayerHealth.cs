@@ -1,22 +1,44 @@
+using System;
+using UnityEngine;
+
 namespace Player
 {
     public class PlayerHealth : MonoBehaviour
     {
+        public Action OnIncrease;
+        public Action OnDecrease;
+        
+        [SerializeField]
+        private PlayerDash _dash;
         [SerializeField] 
         private int _maxHealth = 5;
-        [SerializedField]
-        private int _currentHealth;
+        [SerializeField]
+        private int _health = 5;
+
+        public int MaxHealth => _maxHealth;
+        public int Health => _health;
         
-        public int Health => health;
-        
-        private void IncreaseHealth(int hp)
+        private void Awake()
         {
-            health = Mathf.Clamp(++health, 0, _maxHealth);
+            _health = _maxHealth;
+            _dash.OnDash += DecreaseHealth;
         }
         
-        private void DecreaseHealth(int hp)
+        private void IncreaseHealth()
         {
-            health = Mathf.Clamp(--health, 0, _maxHealth);
+            _health = Mathf.Clamp(++_health, 0, _maxHealth);
+            OnIncrease?.Invoke();
+        }
+        
+        private void DecreaseHealth()
+        {
+            _health = Mathf.Clamp(--_health, 0, _maxHealth);
+            OnDecrease?.Invoke();
+        }
+
+        private void OnDestroy()
+        {
+            _dash.OnDash -= DecreaseHealth;
         }
     }
 }

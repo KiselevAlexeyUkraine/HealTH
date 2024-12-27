@@ -21,8 +21,6 @@ public class SceneSwitcher : MonoBehaviour
         SceneManager.LoadScene(sceneIndex);
     }
 
-
-
     // Метод для перехода на следующую сцену
     public void LoadNextScene()
     {
@@ -61,7 +59,7 @@ public class SceneSwitcher : MonoBehaviour
     public void RestartCurrentScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        PauseManager.instance.Play();
+        PauseManager.Instance.Play();
         SceneManager.LoadScene(currentSceneIndex);
     }
 

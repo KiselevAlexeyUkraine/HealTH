@@ -6,11 +6,11 @@ namespace UI.Game
     public class PausePage : BasePage
     {
         [SerializeField] 
-        private Button _continuationGame;
+        private Button _continue;
+        [SerializeField] 
+        private Button _restart;
         [SerializeField] 
         private Button _settings;
-        [SerializeField] 
-        private Button _backMainMenu;
         [SerializeField] 
         private Button _exit;
 
@@ -19,17 +19,17 @@ namespace UI.Game
 
         private void Awake()
         {
-            _continuationGame.onClick.AddListener(() => { _cursorToggle.ToggleCursorVisibility(); });
-            _settings.onClick.AddListener(() => { PageSwitcher.Open((PageName.Settings));});
-            _backMainMenu.onClick.AddListener(() => { PageSwitcher.Open(PageName.Menu);});
+            _continue.onClick.AddListener(() => { _cursorToggle.ToggleCursorVisibility(); PageSwitcher.Open(PageName.Stats); });
+            _restart.onClick.AddListener(() => { _cursorToggle.ToggleCursorVisibility(); });
+            _settings.onClick.AddListener(() => { PageSwitcher.Open(PageName.Settings); });
             _exit.onClick.AddListener(() => { SceneSwitcher.instance.LoadScene(0); });
         }
 
         private void OnDestroy()
         {
-            _continuationGame.onClick.RemoveAllListeners();
+            _continue.onClick.RemoveAllListeners();
+            _restart.onClick.RemoveAllListeners();
             _settings.onClick.RemoveAllListeners();
-            _backMainMenu.onClick.RemoveAllListeners();
             _exit.onClick.RemoveAllListeners();
         }
     }

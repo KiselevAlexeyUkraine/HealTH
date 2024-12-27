@@ -47,7 +47,6 @@ namespace UI
             {
                 elapsed += Time.deltaTime;
                 _group.alpha = Mathf.Lerp(start, end, elapsed / duration);
-                Debug.Log($"{elapsed / duration}");
                 await UniTask.Yield();
             }
         }

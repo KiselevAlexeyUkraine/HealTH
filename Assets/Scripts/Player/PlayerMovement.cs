@@ -13,6 +13,8 @@ namespace Player
         [SerializeField]
         private PlayerCamera _camera;
         [SerializeField]
+        private PlayerStamina _stamina;
+        [SerializeField]
         private GroundChecker _groundChecker;
         
         [SerializeField] 
@@ -29,28 +31,52 @@ namespace Player
         private CharacterController _characterController;
         private Vector3 _velocity;
 
-        public bool HasJumped { get; private set; }
+        [field: SerializeField]
+        public bool CanJump { get; private set; }
+        [field: SerializeField]
+        public bool HasJump { get; private set; }
+        [field: SerializeField]
+        public bool IsGrounded { get; private set; }
+        [field: SerializeField]
+        public bool Idle { get; private set; }
+        [field: SerializeField]
         public bool IsMoving { get; private set; }
+        [field: SerializeField]
         public bool IsSprinting { get; private set; }
 
-        private void Start()
+        public float VelocityY => _velocity.y;
+
+        private void Awake()
         {
             _characterController = GetComponent<CharacterController>();
         }
 
         private void Update()
         {
+            IsGrounded = _groundChecker.IsGrounded;
             var movement = InputPlayer.Movement;
             
             if (movement != Vector3.zero)
             {
-                var isSprinting = InputPlayer.Spriting;
-                Move(movement, isSprinting);
+                Idle = false;
+                IsSprinting = InputPlayer.Spriting;
+                Move(movement);
+            }
+            else
+            {
+                Idle = true;
+                IsSprinting = false;
+                IsMoving = false;
             }
             
-            if (InputPlayer.Jump && _groundChecker.IsGrounded)
+            if (InputPlayer.Jump && IsGrounded && CanJump)
             {
                 Jump();
+                CanJump = false;
+            }
+            else if (IsGrounded && !CanJump)
+            {
+                CanJump = true;
             }
 
             Gravity();
@@ -61,9 +87,23 @@ namespace Player
             _characterController.Move(direction);
         }
 
-        private void Move(Vector3 movement, bool isSprinting)
+        private void Move(Vector3 movement)
         {
-            var speed = isSprinting ? _sprintSpeed : _moveSpeed;
+            float speed;
+            
+            if (IsSprinting && _stamina.Stamina > 0f)
+            {
+                IsMoving = false;
+                speed = _sprintSpeed;
+                OnSprinting?.Invoke();
+            }
+            else
+            {
+                IsMoving = true;
+                speed = _moveSpeed;
+                OnMoving?.Invoke();
+            }
+            
             var targetRotation = _camera.GetRotation();
             var toward = Quaternion.Lerp(
                 _characterController.transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime
@@ -76,14 +116,13 @@ namespace Player
         private void Jump()
         {
             _velocity.y = Mathf.Sqrt(_jumpForce * -2f * _gravity);
-            HasJumped = true;
         }
 
         private void Gravity()
         {
             if (_groundChecker.IsGrounded && _velocity.y < 0f)
             {
-                _velocity.y = -2f; 
+                _velocity.y = -1f; 
             }
 
             _velocity.y += _gravity * Time.deltaTime;

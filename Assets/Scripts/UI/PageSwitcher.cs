@@ -26,6 +26,7 @@ namespace UI
             {
                 if (page.pageName != _startPage)
                 {
+                    page.Close();
                     continue;
                 }
                 

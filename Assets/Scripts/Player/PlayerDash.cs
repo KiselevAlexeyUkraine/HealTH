@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -5,8 +6,12 @@ namespace Player
 {
     public class PlayerDash : MonoBehaviour
     {
+        public Action OnDash;
+        
         [SerializeField]
         private PlayerMovement _movement;
+        [SerializeField]
+        private PlayerHealth _health;
         [SerializeField] 
         private float _dashDistance = 4f; 
         [SerializeField] 
@@ -19,8 +24,9 @@ namespace Player
 
         private void Update()
         {
-            if (InputPlayer.Dash && _canDash)
+            if (InputPlayer.Dash && _canDash && _health.Health > 1)
             {
+                OnDash?.Invoke();
                 Dash().Forget();
             }
         }

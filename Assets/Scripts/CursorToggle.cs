@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CursorToggle : MonoBehaviour
+public class CursorToggle
 {
     private bool _isCursorVisible;
 
@@ -10,5 +10,21 @@ public class CursorToggle : MonoBehaviour
         
         Cursor.visible = _isCursorVisible;
         Cursor.lockState = _isCursorVisible ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    public void Enable()
+    {
+        _isCursorVisible = true;
+        
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void Disable()
+    {
+        _isCursorVisible = false;
+        
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 }
