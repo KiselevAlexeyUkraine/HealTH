@@ -104,13 +104,14 @@ namespace Player
                 OnMoving?.Invoke();
             }
             
-            var targetRotation = _camera.GetRotation();
-            var toward = Quaternion.Lerp(
-                _characterController.transform.rotation, targetRotation, _rotationSpeed * Time.deltaTime
-            );
+            var desiredMoveDirection = (_camera.CameraForward() * movement.z + _camera.CameraRight() * movement.x).normalized;
+            if (desiredMoveDirection != Vector3.zero)
+            {
+                var toRotation = Quaternion.LookRotation(desiredMoveDirection, Vector3.up);
+                _characterController.transform.rotation = Quaternion.RotateTowards(_characterController.transform.rotation, toRotation, _rotationSpeed * Time.deltaTime);
+            }
             
-            _characterController.transform.rotation = toward;
-            _characterController.Move(toward * movement * (speed * Time.deltaTime));
+            _characterController.Move(desiredMoveDirection * (speed * Time.deltaTime));
         }
 
         private void Jump()
