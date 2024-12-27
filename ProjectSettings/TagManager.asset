@@ -11,6 +11,7 @@ TagManager:
   - Dollars
   - CameraIgnore
   - Key
+  - Health
   layers:
   - Default
   - TransparentFX
