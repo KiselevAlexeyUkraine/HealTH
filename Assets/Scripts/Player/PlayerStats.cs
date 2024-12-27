@@ -14,6 +14,7 @@ namespace Player
         private int coin = 0;
         [SerializeField]
         private int key = 0;
+        public int Key { get { return key; } }
 
         private void Awake()
         {
