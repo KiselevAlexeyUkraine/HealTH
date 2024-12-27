@@ -20,7 +20,7 @@ namespace UI.Menu
             for (var i = 0; i < _levels.Count; i++)
             {
                 var index = i + 1;
-                _levels[i].onClick.AddListener(() => SceneSwitcher.instance.LoadScene(index));
+                _levels[i].onClick.AddListener(() => SceneSwitcher.Instance.LoadScene(index));
             }
             
             _back.onClick.AddListener(() => { PageSwitcher.Open(PageName.None); });

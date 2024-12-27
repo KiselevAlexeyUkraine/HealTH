@@ -12,5 +12,6 @@ namespace UI
         Failed,
         Complete,
         Stats,
+        GameSettings,
     }
 }

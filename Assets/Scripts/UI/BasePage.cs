@@ -23,7 +23,7 @@ namespace UI
             _group.alpha = 0f;
         }
         
-        public async void Open()
+        public async UniTaskVoid Open()
         {
             OnOpen?.Invoke();
             gameObject.SetActive(true);
@@ -31,7 +31,7 @@ namespace UI
             Opened?.Invoke();
         }
 
-        public async void Close()
+        public async UniTaskVoid Close()
         {
             OnClose?.Invoke();
             await Fade(1f, 0f, 0.2f);
@@ -45,9 +45,9 @@ namespace UI
         
             while (elapsed <= duration)
             {
-                elapsed += Time.deltaTime;
+                elapsed += Time.unscaledDeltaTime;
                 _group.alpha = Mathf.Lerp(start, end, elapsed / duration);
-                await UniTask.Yield();
+                await UniTask.NextFrame();
             }
         }
     }

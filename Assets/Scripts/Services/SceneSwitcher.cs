@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
-    public static SceneSwitcher instance;
+    public static SceneSwitcher Instance;
 
     public int CurrentScene { get => SceneManager.GetActiveScene().buildIndex; }
 
@@ -12,7 +12,7 @@ public class SceneSwitcher : MonoBehaviour
 
     private void Awake()
     {
-        instance = this;
+        Instance = this;
     }
 
     // Метод для перехода на сцену по индексу
@@ -59,7 +59,6 @@ public class SceneSwitcher : MonoBehaviour
     public void RestartCurrentScene()
     {
         int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        PauseManager.Instance.Play();
         SceneManager.LoadScene(currentSceneIndex);
     }
 

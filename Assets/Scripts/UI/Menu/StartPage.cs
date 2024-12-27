@@ -4,7 +4,7 @@ namespace UI.Menu
     {
         private void Awake()
         {
-            Opened += () => SceneSwitcher.instance.LoadScene(1);
+            Opened += () => SceneSwitcher.Instance.LoadScene(1);
         }
     }
 }

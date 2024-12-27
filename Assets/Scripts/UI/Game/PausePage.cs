@@ -1,3 +1,4 @@
+using Services;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,15 +15,15 @@ namespace UI.Game
         [SerializeField] 
         private Button _exit;
 
-        [SerializeField] 
-        private CursorToggle _cursorToggle;
+        [SerializeField]
+        private PauseManager _pauseManager;
 
         private void Awake()
         {
-            _continue.onClick.AddListener(() => { _cursorToggle.ToggleCursorVisibility(); PageSwitcher.Open(PageName.Stats); });
-            _restart.onClick.AddListener(() => { _cursorToggle.ToggleCursorVisibility(); });
-            _settings.onClick.AddListener(() => { PageSwitcher.Open(PageName.Settings); });
-            _exit.onClick.AddListener(() => { SceneSwitcher.instance.LoadScene(0); });
+            _continue.onClick.AddListener(() => { _pauseManager.SwitchState(); });
+            _restart.onClick.AddListener(() => { SceneSwitcher.Instance.RestartCurrentScene(); });
+            _settings.onClick.AddListener(() => { PageSwitcher.Open(PageName.GameSettings); });
+            _exit.onClick.AddListener(() => { SceneSwitcher.Instance.LoadScene(0); });
         }
 
         private void OnDestroy()

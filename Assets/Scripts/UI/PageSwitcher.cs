@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,35 +19,31 @@ namespace UI
             {
                 page.PageSwitcher = this;
             }
-        }
-
-        private void Start()
-        {
+            
             foreach (var page in _pages)
             {
                 if (page.pageName != _startPage)
                 {
-                    page.Close();
+                    page.Close().Forget();
                     continue;
                 }
                 
                 _currentPage = page;
-                _currentPage.Open();
+                _currentPage.Open().Forget();
             }
         }
 
         public void Open(PageName pageName)
         {
-            foreach (var page in _pages)
+            for (var i = 0; i < _pages.Count; i++)
             {
-                if (page.pageName != pageName)
+                if (_pages[i].pageName == pageName)
                 {
-                    continue;
+                    _currentPage.Close().Forget();
+                    _currentPage = _pages[i];
+                    _currentPage.Open().Forget();
+                    return;
                 }
-                
-                _currentPage.Close();
-                _currentPage = page;
-                _currentPage.Open();
             }
         }
     }

@@ -1,12 +1,13 @@
-using System;
 using Player;
+using UI;
 using UnityEngine;
 
 namespace Services
 {
     public class PauseManager : MonoBehaviour
     {
-        public static PauseManager Instance;
+        [SerializeField]
+        private PageSwitcher _pageSwitcher;
         
         private CursorToggle _cursorToggle;
         
@@ -14,20 +15,10 @@ namespace Services
         
         private void Awake()
         {
-            if (Instance != null)
-            {
-                return;
-            }
-            
-            Instance = this;
             _cursorToggle = new CursorToggle();
-        }
-
-        private void Start()
-        {
             Play();
         }
-
+        
         private void Update()
         {
             if (InputPlayer.Pause)
@@ -44,7 +35,7 @@ namespace Services
 
         public void Play()
         {
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
             _cursorToggle.Disable();
         }
 
@@ -52,11 +43,13 @@ namespace Services
         {
             if (IsPaused)
             {
-                Pause();
+                _pageSwitcher.Open(PageName.Stats);
+                Play();  
             }
             else
             {
-                Play();  
+                _pageSwitcher.Open(PageName.Pause);
+                Pause();
             }
         
             IsPaused = !IsPaused;
