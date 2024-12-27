@@ -11,7 +11,10 @@ GameObject:
   - component: {fileID: 3949495463247016596}
   - component: {fileID: 3160459758876378606}
   - component: {fileID: 3122405175124036442}
-  - component: {fileID: 705343297826418495}
+  - component: {fileID: 7751552050900232563}
+  - component: {fileID: 8601151795785151215}
+  - component: {fileID: 3837144493541077308}
+  - component: {fileID: 2734258259719011581}
   m_Layer: 0
   m_Name: Wall_Door_Straight (1)
   m_TagString: CameraIgnore
@@ -86,8 +89,63 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &705343297826418495
+--- !u!95 &7751552050900232563
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376599641442392616}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0f550f3c62fc8b84f8da9cdf70550d92, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!65 &8601151795785151215
 BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376599641442392616}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.48, y: 2.3385637, z: -2.13}
+  m_Center: {x: -1.5496161, y: 1.1692818, z: -0.000000026077032}
+--- !u!114 &3837144493541077308
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2376599641442392616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80d4cb48b68e894a9f69379a1ca2150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  requiredKeys: 1
+--- !u!64 &2734258259719011581
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -104,9 +162,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 3.099233, y: 2.3385637, z: 0.20000003}
-  m_Center: {x: -1.5496155, y: 1.1692818, z: 0.0000076033175}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8742576847059087512, guid: 6428cc7b2507ded4083c5966150e99ba, type: 3}
 --- !u!1 &7395302784996003004
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,6 +177,7 @@ GameObject:
   - component: {fileID: 8170992882999599377}
   - component: {fileID: 5802570305248672115}
   - component: {fileID: 6646076714069581360}
+  - component: {fileID: 3564931479386500104}
   m_Layer: 0
   m_Name: Gate4
   m_TagString: Untagged
@@ -191,3 +251,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &3564931479386500104
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7395302784996003004}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.98203546, y: 1.7634461, z: 0.13009888}
+  m_Center: {x: -0.4521549, y: 0.000000059604645, z: 0.000015337862}

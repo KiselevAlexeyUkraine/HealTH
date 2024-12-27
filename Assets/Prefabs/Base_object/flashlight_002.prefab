@@ -129,22 +129,22 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.246
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.64
+      value: -109.1752
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.3091307
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 32.13
+      value: 38.47702
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
@@ -190,6 +190,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: flashlight_002
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1b51babca269db34ebed2f0ff6477208,
+        type: 3}
+      propertyPath: m_TagString
+      value: CameraIgnore
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
