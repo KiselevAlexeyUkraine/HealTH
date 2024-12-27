@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8962625252135249345}
   - component: {fileID: 4225479160279576134}
-  - component: {fileID: 8298102663136240025}
+  - component: {fileID: 7849438966208092701}
   m_Layer: 0
   m_Name: Point Light
   m_TagString: Untagged
@@ -95,7 +95,7 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!114 &8298102663136240025
+--- !u!114 &7849438966208092701
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,8 +128,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.246
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
+        type: 3}
       propertyPath: m_LocalPosition.x
-      value: -14.48
+      value: -21.64
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
@@ -139,7 +144,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -73.87
+      value: 32.13
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1b51babca269db34ebed2f0ff6477208,
         type: 3}
