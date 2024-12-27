@@ -11,17 +11,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 154c91f4531a22943a8d205de960a52f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -357.69
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 154c91f4531a22943a8d205de960a52f,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.87
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 154c91f4531a22943a8d205de960a52f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -181.97
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 154c91f4531a22943a8d205de960a52f,
         type: 3}
@@ -81,10 +81,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 9089379757936967827}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 154c91f4531a22943a8d205de960a52f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7631033897757458031}
   m_SourcePrefab: {fileID: 100100000, guid: 154c91f4531a22943a8d205de960a52f, type: 3}
 --- !u!1 &8848701103918621018 stripped
 GameObject:
@@ -113,24 +109,3 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.5451621, y: 0.5451622, z: 0.5451622}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!95 &7631033897757458031
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8848701103918621018}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5e13db815234eaf408e3e4d957dd1c15, type: 2}
-  m_CullingMode: 1
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
