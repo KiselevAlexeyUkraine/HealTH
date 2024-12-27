@@ -24,7 +24,7 @@ namespace Player
             _dash.OnDash += DecreaseHealth;
         }
         
-        private void IncreaseHealth()
+        public void IncreaseHealth() // Переделать чтобы Андрей показал как правильно
         {
             _health = Mathf.Clamp(++_health, 0, _maxHealth);
             OnIncrease?.Invoke();

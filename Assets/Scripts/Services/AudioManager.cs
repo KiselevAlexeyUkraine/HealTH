@@ -23,8 +23,10 @@ namespace Services
             {
                 _volumeSlider.value = savedVolume;
                 _volumeSlider.onValueChanged.AddListener(SetVolume);
+
             }
-            
+            Debug.Log(_volumeSlider == null);
+            Debug.Log(savedVolume);
             SetVolume(savedVolume);
         }
 
