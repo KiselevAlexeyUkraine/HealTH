@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 4143116687743341159}
   m_Layer: 0
   m_Name: Curb_Corner_CCW (1)
-  m_TagString: Untagged
+  m_TagString: CameraIgnore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
