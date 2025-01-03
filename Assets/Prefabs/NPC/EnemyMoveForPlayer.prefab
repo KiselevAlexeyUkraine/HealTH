@@ -3496,7 +3496,7 @@ MonoBehaviour:
   patrolSpeed: 3
   chaseSpeed: 5
   waitTimeAtPatrolPoint: 2
-  attackRadius: 1.75
+  attackRadius: 1.7
   detectionRadius: 8
   patrolClip: {fileID: 8300000, guid: 5a12c3ab018e526479fe2a5fbab5810c, type: 3}
   chaseClip: {fileID: 8300000, guid: bea6141389fda044494f57a166b3175a, type: 3}
