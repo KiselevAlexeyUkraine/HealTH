@@ -6,7 +6,7 @@ namespace Player
     {
         public Transform _groundCheck; 
         public LayerMask _groundMask; 
-        public float _groundCheckRadius = 0.4f; 
+        public float _groundCheckRadius = 0.5f; 
         
         public bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundMask);
 

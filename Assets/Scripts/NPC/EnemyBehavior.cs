@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class EnemyBehavior : MonoBehaviour
 {
     public Action EnemyAttack;
-    private PlayerHealth playerStats; // Ссылка на скрипт PlayerStats
     [SerializeField] private Transform[] patrolPoints; // Точки для патрулирования
     [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] private float chaseSpeed = 5f;
@@ -39,7 +38,6 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
-        playerStats = GameObject.Find("Character").GetComponent<PlayerHealth>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -209,9 +207,10 @@ public class EnemyBehavior : MonoBehaviour
 
         if (player != null)
         {
-            // Поворачиваем врага в сторону игрока
+            // Поворачиваем врага в сторону игрока, фиксируя оси X и Z
             Vector3 directionToPlayer = (player.position - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer); // Исправлено: инициализация переменной
+            directionToPlayer.y = 0; // Убираем компонент Y, чтобы поворот происходил только по оси Y
+            Quaternion lookRotation = Quaternion.LookRotation(directionToPlayer);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * 5f); // Плавный поворот
         }
 
