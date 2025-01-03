@@ -23,7 +23,7 @@ RenderSettings:
   m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 0.5
+  m_AmbientIntensity: 1
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
@@ -25995,20 +25995,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1692817390087437328, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: attackRadius
-      value: 1.7
-      objectReference: {fileID: 0}
     - target: {fileID: 3161579354588114149, guid: 6cee84178b4440d4e97eaeeb5f207131,
         type: 3}
       propertyPath: m_Name
       value: EnemyMoveForPlayer
-      objectReference: {fileID: 0}
-    - target: {fileID: 5160622944143403332, guid: 6cee84178b4440d4e97eaeeb5f207131,
-        type: 3}
-      propertyPath: m_StoppingDistance
-      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
