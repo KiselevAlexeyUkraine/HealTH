@@ -14,6 +14,8 @@ namespace Player
         private int _maxHealth = 5;
         [SerializeField]
         private int _health = 5;
+        [SerializeField]
+        private EnemyBehavior _enemyBehavior;
 
         public int MaxHealth => _maxHealth;
         public int Health => _health;
@@ -22,6 +24,7 @@ namespace Player
         {
             _health = _maxHealth;
             _dash.OnDash += DecreaseHealth;
+            _enemyBehavior.EnemyAttack += DecreaseHealth;
         }
         
         public void IncreaseHealth() // Переделать чтобы Андрей показал как правильно

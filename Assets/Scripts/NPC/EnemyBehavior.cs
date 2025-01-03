@@ -1,10 +1,12 @@
 using Player;
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
 public class EnemyBehavior : MonoBehaviour
 {
-    private PlayerStats playerStats; // Ссылка на скрипт PlayerStats
+    public Action EnemyAttack;
+    private PlayerHealth playerStats; // Ссылка на скрипт PlayerStats
     [SerializeField] private Transform[] patrolPoints; // Точки для патрулирования
     [SerializeField] private float patrolSpeed = 2f;
     [SerializeField] private float chaseSpeed = 5f;
@@ -37,7 +39,7 @@ public class EnemyBehavior : MonoBehaviour
 
     void Start()
     {
-        playerStats = GameObject.Find("Character").GetComponent<PlayerStats>();
+        playerStats = GameObject.Find("Character").GetComponent<PlayerHealth>();
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
@@ -230,11 +232,8 @@ public class EnemyBehavior : MonoBehaviour
     // Этот метод будет вызываться в анимации атаки
     public void AttackPlayerAnimationEvent()
     {
-        if (playerStats != null)
-        {
-            //playerStats.DecreaseMotivationForEnemy(damage); // Уменьшаем здоровье игрока
-            audioSource.Play(); // Включаем звук атаки
-        }
+        EnemyAttack?.Invoke();
+        audioSource.Play(); // Включаем звук атаки
     }
 
     private void OnTriggerEnter(Collider other)
