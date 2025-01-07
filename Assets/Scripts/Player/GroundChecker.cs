@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace Player
 {
-    // Этот класс проверяет, находится ли объект на земле, используя заданную точку проверки.
+    // Р­С‚РѕС‚ РєР»Р°СЃСЃ РїСЂРѕРІРµСЂСЏРµС‚, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РѕР±СЉРµРєС‚ РЅР° Р·РµРјР»Рµ, РёСЃРїРѕР»СЊР·СѓСЏ Р·Р°РґР°РЅРЅСѓСЋ С‚РѕС‡РєСѓ РїСЂРѕРІРµСЂРєРё.
     public class GroundChecker : MonoBehaviour
     {
-        [SerializeField] private Transform _groundCheck; // Трансформ, указывающий точку проверки на земле.
-        [SerializeField] private LayerMask _groundMask; // Слой, определяющий, что считается землей.
-        [SerializeField] private float _groundCheckRadius = 0.5f; // Радиус проверки соприкосновения с землей.
+        [SerializeField] private Transform _groundCheck; // РўСЂР°РЅСЃС„РѕСЂРј, СѓРєР°Р·С‹РІР°СЋС‰РёР№ С‚РѕС‡РєСѓ РїСЂРѕРІРµСЂРєРё РЅР° Р·РµРјР»Рµ.
+        [SerializeField] private LayerMask _groundMask; // РЎР»РѕР№, РѕРїСЂРµРґРµР»СЏСЋС‰РёР№, С‡С‚Рѕ СЃС‡РёС‚Р°РµС‚СЃСЏ Р·РµРјР»РµР№.
+        [SerializeField] private float _groundCheckRadius = 0.5f; // Р Р°РґРёСѓСЃ РїСЂРѕРІРµСЂРєРё СЃРѕРїСЂРёРєРѕСЃРЅРѕРІРµРЅРёСЏ СЃ Р·РµРјР»РµР№.
 
         private void Awake()
         {
@@ -17,14 +17,14 @@ namespace Player
             }
         }
 
-        // Свойство возвращает true, если объект касается слоя "земля".
+        // РЎРІРѕР№СЃС‚РІРѕ РІРѕР·РІСЂР°С‰Р°РµС‚ true, РµСЃР»Рё РѕР±СЉРµРєС‚ РєР°СЃР°РµС‚СЃСЏ СЃР»РѕСЏ "Р·РµРјР»СЏ".
         public bool IsGrounded => Physics.CheckSphere(_groundCheck.position, _groundCheckRadius, _groundMask);
 
-        // Визуализирует область проверки в редакторе Unity.
+        // Р’РёР·СѓР°Р»РёР·РёСЂСѓРµС‚ РѕР±Р»Р°СЃС‚СЊ РїСЂРѕРІРµСЂРєРё РІ СЂРµРґР°РєС‚РѕСЂРµ Unity.
         private void OnDrawGizmos()
         {
-            Gizmos.color = Color.blue; // Устанавливает синий цвет для визуализации.
-            Gizmos.DrawSphere(_groundCheck.position, _groundCheckRadius); // Рисует сферу проверки.
+            Gizmos.color = Color.blue; // РЈСЃС‚Р°РЅР°РІР»РёРІР°РµС‚ СЃРёРЅРёР№ С†РІРµС‚ РґР»СЏ РІРёР·СѓР°Р»РёР·Р°С†РёРё.
+            Gizmos.DrawSphere(_groundCheck.position, _groundCheckRadius); // Р РёСЃСѓРµС‚ СЃС„РµСЂСѓ РїСЂРѕРІРµСЂРєРё.
         }
     }
 }
