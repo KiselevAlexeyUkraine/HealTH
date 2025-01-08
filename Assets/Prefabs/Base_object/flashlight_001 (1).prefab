@@ -16,7 +16,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &5512905518908599669
 Transform:
@@ -46,7 +46,7 @@ Light:
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 25
-  m_Range: 15
+  m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -205,6 +205,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: CameraIgnore
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 03ab5da1e7a5a1949b621eda75120321,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

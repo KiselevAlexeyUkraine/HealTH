@@ -44,6 +44,9 @@ namespace UI.Game
             // Подписываемся на события изменения здоровья.
             _health.OnIncrease += HandleHealthIncrease;
             _health.OnDecrease += HandleHealthDecrease;
+
+            // Инициализируем UI на основе текущего состояния здоровья.
+            UpdateHealthUI();
         }
 
         /// <summary>
@@ -63,11 +66,7 @@ namespace UI.Game
         /// </summary>
         private void HandleHealthIncrease()
         {
-            // Включаем визуальный элемент здоровья, соответствующий текущему количеству здоровья.
-            if (_health.Health < _healthImages.Count)
-            {
-                _healthImages[_health.Health].gameObject.SetActive(true);
-            }
+            UpdateHealthUI(); // Обновляем весь UI здоровья.
         }
 
         /// <summary>
@@ -75,10 +74,17 @@ namespace UI.Game
         /// </summary>
         private void HandleHealthDecrease()
         {
-            // Отключаем визуальный элемент здоровья, соответствующий текущему количеству здоровья.
-            if (_health.Health < _healthImages.Count)
+            UpdateHealthUI(); // Обновляем весь UI здоровья.
+        }
+
+        /// <summary>
+        /// Обновляет UI здоровья на основе текущего состояния.
+        /// </summary>
+        private void UpdateHealthUI()
+        {
+            for (int i = 0; i < _healthImages.Count; i++)
             {
-                _healthImages[_health.Health].gameObject.SetActive(false);
+                _healthImages[i].gameObject.SetActive(i < _health.Health); // Активируем элементы, соответствующие текущему здоровью.
             }
         }
     }
