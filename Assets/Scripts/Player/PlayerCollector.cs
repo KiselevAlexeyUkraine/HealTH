@@ -2,35 +2,40 @@ using UnityEngine;
 
 namespace Player
 {
+    // Этот класс отвечает за сбор объектов с различными тегами и обработку их взаимодействия с игроком.
     public class PlayerCollector : MonoBehaviour
     {
-        [SerializeField] private PlayerStats _stats;
+        [SerializeField] private PlayerStats _stats; // Ссылка на компонент, отвечающий за статистику игрока.
 
+        // Метод вызывается при входе в триггер-коллайдер.
         void OnTriggerEnter(Collider other)
         {
+            // Проверка, инициализирован ли компонент PlayerStats.
             if (_stats == null)
             {
-                Debug.LogError("PlayerStats is not assigned!");
-                return;
+                Debug.LogError("PlayerStats is not assigned!"); // Вывод ошибки в консоль, если компонент не настроен.
+                return; // Прерываем выполнение метода, чтобы избежать ошибок.
             }
 
-            switch (other.tag)
+            // Обработка различных тегов объектов, с которыми сталкивается игрок.
+            if (other.CompareTag("Health"))
             {
-                case "Health":
-                    _stats.AddScore(ScoreType.Health);
-                    Destroy(other.gameObject);
-                    break;
-                case "Coin":
-                    _stats.AddScore(ScoreType.Coin);
-                    Destroy(other.gameObject);
-                    break;
-                case "Key":
-                    _stats.AddScore(ScoreType.Key);
-                    Destroy(other.gameObject);
-                    break;
-                default:
-                    Debug.LogWarning($"Unhandled tag: {other.tag}");
-                    break;
+                _stats.AddScore(ScoreType.Health); // Увеличиваем счет за здоровье.
+                Destroy(other.gameObject); // Удаляем объект после взаимодействия.
+            }
+            else if (other.CompareTag("Coin"))
+            {
+                _stats.AddScore(ScoreType.Coin); // Увеличиваем счет за монеты.
+                Destroy(other.gameObject); // Удаляем объект после взаимодействия.
+            }
+            else if (other.CompareTag("Key"))
+            {
+                _stats.AddScore(ScoreType.Key); // Увеличиваем счет за ключи.
+                Destroy(other.gameObject); // Удаляем объект после взаимодействия.
+            }
+            else
+            {
+                Debug.LogWarning($"Unhandled tag: {other.tag}"); // Выводим предупреждение для неизвестного тега.
             }
         }
     }
