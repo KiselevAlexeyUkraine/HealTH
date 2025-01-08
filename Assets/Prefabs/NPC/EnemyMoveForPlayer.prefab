@@ -851,7 +851,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6848523389992182759}
   m_Layer: 0
-  m_Name: Points
+  m_Name: PointsPatroll
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1713,7 +1713,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8457505199474550443}
   m_Layer: 0
-  m_Name: The Boss
+  m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3389,7 +3389,7 @@ GameObject:
   - component: {fileID: 2488596013937336286}
   - component: {fileID: 2343593508484364856}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: EnemyComponents
   m_TagString: CameraIgnore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
