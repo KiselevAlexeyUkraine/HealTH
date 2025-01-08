@@ -20,17 +20,17 @@ namespace Player
             // Обработка различных тегов объектов, с которыми сталкивается игрок.
             if (other.CompareTag("Health"))
             {
-                _stats.AddScore(ScoreType.Health); // Увеличиваем счет за здоровье.
+                _stats.ChangeScore(ScoreType.Health, 1); // Увеличиваем здоровье.
                 Destroy(other.gameObject); // Удаляем объект после взаимодействия.
             }
             else if (other.CompareTag("Coin"))
             {
-                _stats.AddScore(ScoreType.Coin); // Увеличиваем счет за монеты.
+                _stats.ChangeScore(ScoreType.Coin, 1); // Увеличиваем счет за монеты.
                 Destroy(other.gameObject); // Удаляем объект после взаимодействия.
             }
             else if (other.CompareTag("Key"))
             {
-                _stats.AddScore(ScoreType.Key); // Увеличиваем счет за ключи.
+                _stats.ChangeScore(ScoreType.Key, 1); // Увеличиваем счет за ключи.
                 Destroy(other.gameObject); // Удаляем объект после взаимодействия.
             }
             else

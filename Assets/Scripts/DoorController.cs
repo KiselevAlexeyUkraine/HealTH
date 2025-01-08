@@ -6,7 +6,7 @@ public class DoorController : MonoBehaviour
     private Animator doorAnimator; // Аниматор двери
     [SerializeField] private int requiredKeys = 1; // Количество ключей, необходимых для открытия двери
     private PlayerStats playerStats; // Ссылка на скрипт PlayerStats
-    private bool IsOpen = true;
+    private bool isOpen = true; // Флаг, указывающий, открыта ли дверь
 
     private void Start()
     {
@@ -17,7 +17,7 @@ public class DoorController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (IsOpen == true)
+        if (isOpen)
         {
             if (other.CompareTag("Player"))
             {
@@ -43,7 +43,7 @@ public class DoorController : MonoBehaviour
         }
 
         // Уменьшаем количество ключей у игрока
-        playerStats.DecreaseKeys(); // Уменьшаем количество ключей
-        IsOpen = false;
+        playerStats.ChangeScore(ScoreType.Key, -requiredKeys); // Уменьшаем количество ключей
+        isOpen = false; // Дверь теперь считается закрытой
     }
 }
