@@ -26,7 +26,7 @@ namespace Player
         private void Update()
         {
             // Проверяем ввод игрока, доступность рывка и достаточный уровень здоровья.
-            if (InputPlayer.Dash && _canDash && _health.Health > 1)
+            if (InputPlayer.Dash && _canDash && CanPerformDash())
             {
                 OnDash?.Invoke(); // Вызываем событие рывка.
                 Dash().Forget(); // Асинхронно выполняем рывок.
@@ -37,6 +37,12 @@ namespace Player
         private Vector3 CalculateEndPosition(Vector3 startPosition, Vector3 forward)
         {
             return startPosition + Vector3.ClampMagnitude(forward * _dashDistance, _dashDistance);
+        }
+
+        // Проверяем хватает ли жизней для рывка
+        private bool CanPerformDash()
+        {
+            return _health.Health > 1;
         }
 
         // Асинхронный метод выполнения рывка.
