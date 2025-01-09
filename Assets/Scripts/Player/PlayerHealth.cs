@@ -17,6 +17,8 @@ namespace Player
         private int _health = 5; // Текущее значение здоровья.
         [SerializeField]
         private EnemyBehavior _enemyBehavior; // Ссылка на поведение врага.
+        [SerializeField]
+        private CarForGame _carForGame; // Ссылка на поведение врага.
 
         public int MaxHealth => _maxHealth; // Свойство для получения максимального здоровья.
         public int Health => _health; // Свойство для получения текущего здоровья.
@@ -26,6 +28,7 @@ namespace Player
             _health = _maxHealth; // Устанавливаем здоровье на максимум при старте.
             _dash.OnDash += DecreaseHealth; // Подписываемся на событие рывка для уменьшения здоровья.
             _enemyBehavior.EnemyAttack += DecreaseHealth; // Подписываемся на атаку врага для уменьшения здоровья.
+            _carForGame.PlayerDamaged += DecreaseHealth; // Подписываемся на атаку машины для уменьшения здоровья.
         }
 
         // Увеличивает здоровье игрока, не превышая максимальное значение.
