@@ -3387,7 +3387,6 @@ GameObject:
   - component: {fileID: 1692817390087437328}
   - component: {fileID: 1929578511326210467}
   - component: {fileID: 2488596013937336286}
-  - component: {fileID: 2343593508484364856}
   m_Layer: 0
   m_Name: EnemyComponents
   m_TagString: CameraIgnore
@@ -3595,27 +3594,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!65 &2343593508484364856
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7518819542833057046}
-  m_Material: {fileID: 13400000, guid: 506d0356715bb1443a679ca96edd80be, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 10, z: 1}
-  m_Center: {x: 0, y: 3.96, z: 0}
 --- !u!1 &7564200644612213667
 GameObject:
   m_ObjectHideFlags: 0
